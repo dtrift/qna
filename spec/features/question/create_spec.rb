@@ -5,6 +5,8 @@ feature 'User can create question', %q{
   I'd like to be able to ask the question
 } do
 
+  given(:question) { Question.create(title: 'SomeTitle', body: 'SomeBody') }
+
   scenario 'User asks a question' do
     visit new_question_path
     fill_in 'Title', with: 'SomeTitle'
@@ -22,5 +24,14 @@ feature 'User can create question', %q{
     click_on 'Create'
 
     expect(page).to have_content "Title can't be blank"
+  end
+
+  scenario 'User can view a list of questions' do
+    question
+    visit questions_path
+
+    # save_and_open_page
+    expect(page).to have_content 'SomeTitle'
+    expect(page).to have_content 'SomeBody'
   end
 end

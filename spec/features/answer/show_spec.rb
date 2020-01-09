@@ -6,7 +6,7 @@ feature 'User can view the question', %q{
 } do
 
   given!(:question) { create :question }
-  given!(:answers) { create_list(:q_answers, 2, question: question) }
+  given!(:answers) { create_list :q_answers, 2, question: question }
 
   scenario 'User view the question with answers' do
     visit question_path(question)

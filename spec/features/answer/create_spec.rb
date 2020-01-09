@@ -8,10 +8,7 @@ feature 'User can create answer', %q{
   given(:question) { create :question }
 
   scenario 'User gives an answer' do
-    # question
-    # save_and_open_page
     visit new_question_answer_path(question)
-    # save_and_open_page
     fill_in 'Body', with: 'Some Answer'
     click_on 'Add answer'
 

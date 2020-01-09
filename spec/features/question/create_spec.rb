@@ -13,7 +13,6 @@ feature 'User can create question', %q{
     fill_in 'Body', with: 'SomeBody'
     click_on 'Create'
 
-    # save_and_open_page
     expect(page).to have_content 'Question successfully created'
     expect(page).to have_content 'SomeTitle'
     expect(page).to have_content 'SomeBody'
@@ -30,7 +29,6 @@ feature 'User can create question', %q{
     question
     visit questions_path
 
-    # save_and_open_page
     expect(page).to have_content 'SomeTitle'
     expect(page).to have_content 'SomeBody'
   end

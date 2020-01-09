@@ -1,5 +1,13 @@
-p = @question.title
+h1 = @question.title
 p = @question.body
+
+- if @question.answers.present?
+  table
+    thead
+      tr
+        th Body
+    tbody
+      = render @question.answers
 
 b = 'Add Answer'
 

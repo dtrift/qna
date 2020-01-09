@@ -19,7 +19,7 @@ feature 'User can create question', %q{
     expect(page).to have_content 'SomeBody'
   end
 
-  scenario 'User asks a question whith errors' do
+  scenario 'User asks a question with errors' do
     visit new_question_path
     click_on 'Create'
 

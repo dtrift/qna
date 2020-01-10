@@ -24,12 +24,4 @@ feature 'User can create question', %q{
 
     expect(page).to have_content "Title can't be blank"
   end
-
-  scenario 'User can view a list of questions' do
-    question
-    visit questions_path
-
-    expect(page).to have_content 'SomeTitle'
-    expect(page).to have_content 'SomeBody'
-  end
 end

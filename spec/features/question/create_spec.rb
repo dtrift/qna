@@ -12,10 +12,11 @@ feature 'User can create question', %q{
     fill_in 'Email', with: user.email
     fill_in 'Password', with: user.password
     click_on 'Log in'
+
+    visit new_question_path
   end
 
   scenario 'User asks a question' do
-    visit new_question_path
     fill_in 'Title', with: 'SomeTitle'
     fill_in 'Body', with: 'SomeBody'
     click_on 'Create'
@@ -26,7 +27,6 @@ feature 'User can create question', %q{
   end
 
   scenario 'User asks a question with errors' do
-    visit new_question_path
     click_on 'Create'
 
     expect(page).to have_content "Title can't be blank"

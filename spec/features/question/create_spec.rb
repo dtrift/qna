@@ -5,7 +5,14 @@ feature 'User can create question', %q{
   I'd like to be able to ask the question
 } do
 
-  given(:question) { Question.create(title: 'SomeTitle', body: 'SomeBody') }
+  given(:user) { User.create!(email: 'user@test.com', password: '12345678') }
+
+  background do
+    visit new_user_session_path
+    fill_in 'Email', with: user.email
+    fill_in 'Password', with: user.password
+    click_on 'Log in'
+  end
 
   scenario 'User asks a question' do
     visit new_question_path

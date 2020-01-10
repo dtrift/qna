@@ -1,9 +1,6 @@
 require 'rails_helper'
 
-feature 'User can create question', %q{
-  In order to get answer from a community
-  I'd like to be able to ask the question
-} do
+feature 'User can see list of questions' do
 
   given!(:questions) { create_list(:s_questions, 3) }
 

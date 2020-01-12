@@ -5,10 +5,12 @@ feature 'User can view the question', %q{
   and answers to it.
 } do
 
-  given!(:question) { create :question }
-  given!(:answers) { create_list :q_answers, 2, question: question }
+  given(:user)  { create :user }
+  given!(:question) { create :question, author: user }
+  given!(:answers) { create_list :q_answers, 2, question: question, author: user }
 
   scenario 'User view the question with answers' do
+    sign_in user
     visit question_path(question)
     
     answers.each do |answer|

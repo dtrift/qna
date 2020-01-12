@@ -8,7 +8,6 @@ feature 'Delete his answer', %q{
   given(:user) { create :user }
   given(:a_user) { create :user }
   given!(:question) { create(:question, author: user) }
-  # given!(:answers) { create_list :q_answers, 5, question: question, author: user }
   given!(:answer) { create :answer, question: question, author: user }
 
 
@@ -17,20 +16,9 @@ feature 'Delete his answer', %q{
     visit question_path(question)
 
     expect(page).to have_content answer.body
-    # save_and_open_page
-
-    # answers.each do |answer|
-    #   expect(page).to have_content answer.body
-    #   click_on 'Delete answer'
-
-    #   expect(page).to have_content 'Answer successfully deleted'
-    #   expect(page).to_not have_content answer.body
-    # end
-
     click_on 'Delete answer'
 
-    expect(page).to have_content 'Answer successfully deleted'
-    expect(page).to_not have_content answer.body
+    expect(page).to have_content 'Answer successfully deleted'  
   end
 
   scenario "Author tries to delete another's answer" do

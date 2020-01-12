@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, except: %i[index show]
+  before_action :authenticate_user!
   before_action :find_question, only: %i[new create destroy]
   before_action :find_answer, only: %i[destroy]
 

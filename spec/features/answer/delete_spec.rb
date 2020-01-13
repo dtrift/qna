@@ -11,7 +11,7 @@ feature 'Delete his answer', %q{
   given!(:answer) { create :answer, question: question, author: user }
 
 
-  scenario 'Author tries to delete his answer' do
+  scenario 'Authenticated Author tries to delete his answer' do
     sign_in user
     visit question_path(question)
 
@@ -21,7 +21,7 @@ feature 'Delete his answer', %q{
     expect(page).to have_content 'Answer successfully deleted'  
   end
 
-  scenario "Author tries to delete another's answer" do
+  scenario "Authenticated Author tries to delete another's answer" do
     sign_in a_user
     visit question_path(question)
 

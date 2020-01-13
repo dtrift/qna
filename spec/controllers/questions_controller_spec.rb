@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:user) { create :user }
-  let(:question) { create :question }
+  let(:question) { create :question, author: user }
 
   describe 'GET #index' do
     let(:questions) { create_list :question, 3, author: user }
@@ -33,6 +33,12 @@ RSpec.describe QuestionsController, type: :controller do
     before { login user }
 
     context 'with valid attributes' do
+      it 'the author of the question is an authenticated user' do
+        post :create, params: { question: attributes_for(:question) }
+
+        expect(assigns(:question).author).to eq user
+      end
+
       it 'saves a new question in the DB' do
         expect { post :create, params: { question: attributes_for(:question) } }
           .to change(Question, :count).by(1)
@@ -59,15 +65,32 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'DELETE #destroy' do
     before { login user }
-    let!(:question) { create :question, author: user }
 
-    it 'Author can deletes the question' do
-      expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
+    context 'Author can deletes his question' do
+      let!(:question) { create :question, author: user }
+
+      it 'deletes the question' do
+        expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
+      end
+
+      it 'redirects to index' do
+        delete :destroy, params: { id: question }
+        expect(response).to redirect_to questions_path
+      end
     end
 
-    it 'redirects to index' do
-      delete :destroy, params: { id: question }
-      expect(response).to redirect_to questions_path
+    context 'Not the author deletes question' do
+      let(:a_user) { create :user }
+      let!(:question) { create :question, author: a_user }
+
+      it 'try delete the question' do
+        expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
+      end
+
+      it 're-renders template show' do
+        delete :destroy, params: { id: question }
+        expect(response).to render_template :show
+      end
     end
   end
 end

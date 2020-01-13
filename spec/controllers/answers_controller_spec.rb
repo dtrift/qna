@@ -55,6 +55,19 @@ RSpec.describe AnswersController, type: :controller do
         expect(response).to redirect_to question_path(question)
       end
     end
-  end
 
+    context 'Not the author deletes answer' do
+      let(:a_user) { create :user }
+      let!(:answer) { create :answer, question: question, author: a_user }
+
+      it 'try delete the answer' do
+        expect { delete :destroy, params: { id: answer, question_id: question } }.to_not change(Answer, :count)
+      end
+
+      it 're-renders questions/show' do
+        delete :destroy, params: { id: answer, question_id: question }
+        expect(response).to render_template 'questions/show'
+      end
+    end
+  end
 end

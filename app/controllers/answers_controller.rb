@@ -1,11 +1,7 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!
-  before_action :find_question, only: %i[new create]
+  before_action :authenticate_user!, only: %i[create destroy]
+  before_action :find_question, only: %i[create]
   before_action :find_answer, only: %i[destroy]
-
-  def new
-    @answer = @question.answers.new
-  end
 
   def create
     @answer = @question.answers.new(answer_params)
@@ -14,7 +10,7 @@ class AnswersController < ApplicationController
     if @answer.save
       redirect_to @question, notice: 'Answer successfully added'
     else
-      render :new
+      render 'questions/show'
     end
   end
 

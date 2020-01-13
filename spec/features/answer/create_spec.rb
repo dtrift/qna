@@ -12,7 +12,7 @@ feature 'User can create answer', %q{
   background do
     sign_in(user)
 
-    visit new_question_answer_path(question)
+    visit question_path(question)
   end
 
   scenario 'Authenticated user gives an answer' do
@@ -24,7 +24,7 @@ feature 'User can create answer', %q{
 
   scenario 'Authenticated user gives an answer with errors' do
     click_on 'Add answer'
-
+    
     expect(page).to have_content "Body can't be blank"
   end
 

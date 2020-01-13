@@ -14,4 +14,12 @@ p = @question.body
 
 b = 'Add Answer'
 
-= render 'answers/form'
+- if user_signed_in?
+  = form_with model: [@question, @answer], local: true do |f|
+    = render 'shared/errors', resource: @answer
+
+    = f.label :body
+    = f.text_area :body
+
+    br
+    = f.submit 'Add answer'

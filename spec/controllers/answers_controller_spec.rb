@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
+  let(:author) { create :user }
   let(:user) { create :user }
-  let(:a_user) { create :user }
-  let(:question) { create :question, author: user }
-  let(:answer) { create :answer, question: question, author: user }
+  let(:question) { create :question, user: author }
+  let(:answer) { create :answer, question: question, user: author }
 
   describe 'POST #create' do
-    before { login user }
+    before { login author }
 
     context 'with valid attributes' do
       it 'saves a new answer in the DB' do
@@ -18,7 +18,7 @@ RSpec.describe AnswersController, type: :controller do
       it 'the author of the answer is an authenticated user' do
         post :create, params: { question_id: question, answer: attributes_for(:answer) }
 
-        expect(assigns(:answer).author).to eq user
+        expect(assigns(:answer).user).to eq author
       end
 
       it 'redirects to show' do
@@ -41,10 +41,10 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    before { login user }
+    before { login author }
 
     context 'Author can deletes his answer' do
-      let!(:answer) { create :answer, question: question, author: user }
+      let!(:answer) { create :answer, question: question, user: author }
 
       it 'delete the answer' do
         expect { delete :destroy, params: { id: answer, question_id: question } }.to change(Answer, :count).by(-1)
@@ -57,8 +57,7 @@ RSpec.describe AnswersController, type: :controller do
     end
 
     context 'Not the author deletes answer' do
-      let(:a_user) { create :user }
-      let!(:answer) { create :answer, question: question, author: a_user }
+      let!(:answer) { create :answer, question: question, user: user }
 
       it 'try delete the answer' do
         expect { delete :destroy, params: { id: answer, question_id: question } }.to_not change(Answer, :count)

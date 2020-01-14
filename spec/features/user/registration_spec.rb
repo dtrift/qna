@@ -8,7 +8,6 @@ feature 'User can register', %q{
   background { visit new_user_registration_path }
 
   scenario 'New registration' do
-    # save_and_open_page
     fill_in 'Email', with: 'test@user.com'
     fill_in 'Password', with: 'testpass'
     fill_in 'Password confirmation', with: 'testpass'
@@ -22,7 +21,6 @@ feature 'User can register', %q{
     fill_in 'Password confirmation', with: 'testpass'
     click_on 'Sign up'
 
-    # save_and_open_page
     expect(page).to have_content "Email can't be blank"
   end 
 
@@ -30,7 +28,6 @@ feature 'User can register', %q{
     fill_in 'Email', with: 'test@user.com'
     click_on 'Sign up'
 
-    # save_and_open_page
     expect(page).to have_content "Password can't be blank"
   end
 end

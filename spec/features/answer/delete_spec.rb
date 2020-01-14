@@ -7,8 +7,8 @@ feature 'Delete his answer', %q{
 
   given(:user) { create :user }
   given(:a_user) { create :user }
-  given!(:question) { create(:question, author: user) }
-  given!(:answer) { create :answer, question: question, author: user }
+  given!(:question) { create(:question, user: user) }
+  given!(:answer) { create :answer, question: question, user: user }
 
 
   scenario 'Authenticated Author tries to delete his answer' do

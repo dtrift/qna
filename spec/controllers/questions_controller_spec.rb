@@ -2,10 +2,10 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:user) { create :user }
-  let(:question) { create :question, author: user }
+  let(:question) { create :question, user: user }
 
   describe 'GET #index' do
-    let(:questions) { create_list :question, 3, author: user }
+    let(:questions) { create_list :question, 3, user: user }
 
     before { get :index }
 
@@ -36,7 +36,7 @@ RSpec.describe QuestionsController, type: :controller do
       it 'the author of the question is an authenticated user' do
         post :create, params: { question: attributes_for(:question) }
 
-        expect(assigns(:question).author).to eq user
+        expect(assigns(:question).user).to eq user
       end
 
       it 'saves a new question in the DB' do
@@ -67,7 +67,7 @@ RSpec.describe QuestionsController, type: :controller do
     before { login user }
 
     context 'Author can deletes his question' do
-      let!(:question) { create :question, author: user }
+      let!(:question) { create :question, user: user }
 
       it 'deletes the question' do
         expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
@@ -81,7 +81,7 @@ RSpec.describe QuestionsController, type: :controller do
 
     context 'Not the author deletes question' do
       let(:a_user) { create :user }
-      let!(:question) { create :question, author: a_user }
+      let!(:question) { create :question, user: a_user }
 
       it 'try delete the question' do
         expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)

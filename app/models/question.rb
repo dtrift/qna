@@ -1,5 +1,5 @@
 class Question < ApplicationRecord
-  belongs_to :author, class_name: 'User'
+  belongs_to :user
   has_many :answers, dependent: :destroy
 
   validates :title, :body, presence: true

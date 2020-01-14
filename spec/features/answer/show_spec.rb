@@ -6,8 +6,8 @@ feature 'User can view the question', %q{
 } do
 
   given(:user)  { create :user }
-  given!(:question) { create :question, author: user }
-  given!(:answers) { create_list :q_answers, 2, question: question, author: user }
+  given!(:question) { create :question, user: user }
+  given!(:answers) { create_list :q_answers, 2, question: question, user: user }
 
   scenario 'User view the question with answers' do
     sign_in user

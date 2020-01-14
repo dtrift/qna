@@ -17,7 +17,7 @@ feature 'Delete his answer', %q{
 
     expect(page).to have_content answer.body
     click_on 'Delete answer'
-
+    
     expect(page).to have_content 'Answer successfully deleted'  
   end
 

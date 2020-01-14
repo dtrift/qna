@@ -6,5 +6,5 @@ h2 = @question.body
     method: :delete, data: { confirm: 'Are you sure?' }
 
 - if @question.answers.present?
-  ul
-    = render partial: 'answers/list'
+  ol
+    = render @question.answers

@@ -17,12 +17,12 @@ feature 'User can create answer', %q{
     end
 
     scenario 'gives an answer' do
-      # save_and_open_page
       fill_in 'Body', with: 'Some Answer'
       click_on 'Add answer'
 
       expect(page).to have_content 'Answer successfully added'
       expect(page).to have_content 'Some Answer'
+      save_and_open_page
     end
 
     scenario 'gives an answer with errors' do

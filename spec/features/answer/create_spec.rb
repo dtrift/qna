@@ -6,12 +6,12 @@ feature 'User can create answer', %q{
   Can write the answer to the question
 } do
 
-  given(:author) { create :user }
-  given(:question) { create :question, user: author }
+  given(:user) { create :user }
+  given(:question) { create :question, user: user }
 
   describe 'Authenticated user' do
     background do
-      sign_in author
+      sign_in user
 
       visit question_path(question)
     end

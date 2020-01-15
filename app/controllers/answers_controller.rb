@@ -1,12 +1,15 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, only: %i[create destroy]
-  before_action :find_question, only: %i[create]
+  before_action :find_question, only: %i[new create]
   before_action :find_answer, only: %i[destroy]
 
+  def new
+    @answer = @question.answers.new
+  end
+
   def create
-    # @answer = @question.answers.new(answer_params)
-    @answer = current_user.answers.build(answer_params.merge(question: @question))
-    # @answer.user = current_user
+    @answer = @question.answers.build(answer_params.merge(question: @question))
+    @answer.user = current_user
 
     if @answer.save
       redirect_to @question, notice: 'Answer successfully added'

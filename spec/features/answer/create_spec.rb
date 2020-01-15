@@ -6,17 +6,18 @@ feature 'User can create answer', %q{
   Can write the answer to the question
 } do
 
-  given(:user) { create :user }
-  given(:question) { create :question, user: user }
+  given(:author) { create :user }
+  given(:question) { create :question, user: author }
 
   describe 'Authenticated user' do
     background do
-      sign_in user
+      sign_in author
 
       visit question_path(question)
     end
 
     scenario 'gives an answer' do
+      # save_and_open_page
       fill_in 'Body', with: 'Some Answer'
       click_on 'Add answer'
 

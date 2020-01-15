@@ -7,7 +7,7 @@ feature 'Delete his answer', %q{
 
   given(:author) { create :user }
   given(:user) { create :user }
-  given(:question) { create :question, user: author }
+  given!(:question) { create :question, user: author }
   given!(:answer) { create :answer, question: question, user: author }
 
 
@@ -16,16 +16,16 @@ feature 'Delete his answer', %q{
     visit question_path(question)
 
     expect(page).to have_content answer.body
-    save_and_open_page
+
     click_on 'Delete answer'
 
     expect(page).to have_content 'Answer successfully deleted'  
   end
 
-  scenario "Authenticated Author tries to delete another's answer" do
-    sign_in author
+  scenario "Authenticated User tries to delete another's answer" do
+    sign_in user
     visit question_path(question)
-    save_and_open_page
+
     expect(page).to_not have_link 'Delete answer'
   end
 

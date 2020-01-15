@@ -5,13 +5,13 @@ feature 'User can delete his question', %q{
   must be an author of question
 } do
 
+  given(:author) { create :user }
+  given(:question) { create :question, user: author }
   given(:user) { create :user }
-  given(:question) { create :question, user: user }
-  given(:a_user) { create :user }
-  given(:a_question) { create :question, user: a_user }
+  given(:a_question) { create :question, user: user }
 
   describe 'Authenticated user' do
-    background { sign_in user }
+    background { sign_in author }
 
     scenario 'tries to delete his question' do
       visit question_path(question)

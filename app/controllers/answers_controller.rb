@@ -4,8 +4,9 @@ class AnswersController < ApplicationController
   before_action :find_answer, only: %i[destroy]
 
   def create
-    @answer = @question.answers.new(answer_params)
-    @answer.user = current_user
+    # @answer = @question.answers.new(answer_params)
+    @answer = current_user.answers.build(answer_params.merge(question: @question))
+    # @answer.user = current_user
 
     if @answer.save
       redirect_to @question, notice: 'Answer successfully added'

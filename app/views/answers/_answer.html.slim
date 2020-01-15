@@ -1,13 +1,12 @@
 - @question.answers.each do |answer|
   p = answer.body
   - if current_user&.author?(answer)
-    = link_to 'Delete answer', answer,
+    = link_to 'Delete answer', answer_path(answer),
       method: :delete, data: { confirm: 'Are you sure?' }
 
 - if user_signed_in?
   b = 'Add Answer'
   = form_with model: [@question, @answer], local: true do |f|
-    = render 'shared/errors', resource: @answer
 
     = f.label :body
     = f.text_area :body

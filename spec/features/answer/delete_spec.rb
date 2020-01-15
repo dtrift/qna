@@ -5,32 +5,33 @@ feature 'Delete his answer', %q{
   must be an author of answer
 } do
 
+  given(:author) { create :user }
   given(:user) { create :user }
-  given(:a_user) { create :user }
-  given!(:question) { create(:question, user: user) }
-  given!(:answer) { create :answer, question: question, user: user }
+  given(:question) { create :question, user: author }
+  given!(:answer) { create :answer, question: question, user: author }
 
 
   scenario 'Authenticated Author tries to delete his answer' do
-    sign_in user
+    sign_in author
     visit question_path(question)
 
     expect(page).to have_content answer.body
+    save_and_open_page
     click_on 'Delete answer'
-    
+
     expect(page).to have_content 'Answer successfully deleted'  
   end
 
   scenario "Authenticated Author tries to delete another's answer" do
-    sign_in a_user
+    sign_in author
     visit question_path(question)
-
-    expect(page).not_to have_link 'Delete answer'
+    save_and_open_page
+    expect(page).to_not have_link 'Delete answer'
   end
 
   scenario 'Unauthenticated user tries to delete answer' do
     visit question_path(question)
 
-    expect(page).not_to have_link 'Delete answer'
+    expect(page).to_not have_link 'Delete answer'
   end
 end

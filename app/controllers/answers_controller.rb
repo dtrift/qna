@@ -1,17 +1,25 @@
 class AnswersController < ApplicationController
+  before_action :authenticate_user!, only: %i[create destroy]
   before_action :find_question, only: %i[new create]
-
-  def new
-    @answer = @question.answers.new
-  end
-
+  before_action :find_answer, only: %i[destroy]
+  
   def create
-    @answer = @question.answers.new(answer_params)
+    @answer = @question.answers.build(answer_params.merge(question: @question))
+    @answer.user = current_user
 
     if @answer.save
-      redirect_to @question
+      redirect_to @question, notice: 'Answer successfully added'
     else
-      render :new
+      render 'questions/show'
+    end
+  end
+
+  def destroy
+    if current_user.author?(@answer)
+      @answer.destroy
+      redirect_to question_path(@answer.question), notice: 'Answer successfully deleted'
+    else
+      render 'questions/show'
     end
   end
 
@@ -19,6 +27,10 @@ class AnswersController < ApplicationController
 
   def find_question
     @question = Question.find(params[:question_id])
+  end
+
+  def find_answer
+    @answer = Answer.find(params[:id])
   end
 
   def answer_params

@@ -7,6 +7,7 @@ h2 = @question.body
                       data: { confirm: 'Are you sure?' }
 
 - if @question.answers.present?
+
   h2 Answers
   - @question.answers.each do |answer|
     - if answer.persisted?

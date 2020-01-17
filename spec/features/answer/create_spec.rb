@@ -22,12 +22,10 @@ feature 'User can create answer', %q{
 
       expect(page).to have_content 'Answer successfully added'
       expect(page).to have_content 'Some Answer'
-      save_and_open_page
     end
 
     scenario 'gives an answer with errors' do
       click_on 'Add answer'
-
       expect(page).to have_content "Body can't be blank"
     end
   end

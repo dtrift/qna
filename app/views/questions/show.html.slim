@@ -9,11 +9,12 @@ h2 = @question.body
 - if @question.answers.present?
   h2 Answers
   - @question.answers.each do |answer|
-    = answer.body
-    - if current_user&.author?(answer)
-      = link_to 'Delete answer', answer_path(answer),
-                                 method: :delete,
-                                 data: { confirm: 'Are you sure?' }
+    - if answer.persisted?
+      = answer.body
+      - if current_user&.author?(answer)
+        = link_to 'Delete answer', answer_path(answer),
+                                   method: :delete,
+                                   data: { confirm: 'Are you sure?' }
 
 - if user_signed_in?
   = 'Add Answer'

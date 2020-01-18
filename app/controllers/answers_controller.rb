@@ -9,8 +9,7 @@ class AnswersController < ApplicationController
 
     if @answer.save
       redirect_to @question, notice: 'Answer successfully added'
-    else
-      render 'questions/show'
+   
     end
   end
 

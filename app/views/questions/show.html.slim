@@ -6,7 +6,7 @@ h2 = @question.body
                       method: :delete,
                       data: { confirm: 'Are you sure?' }
 
-.answer
+.answers
   - if @question.answers.present?
     h2 Answers
     - @question.answers.each do |answer|
@@ -14,10 +14,10 @@ h2 = @question.body
         li
           = answer.body
           - if current_user&.author?(answer)
-          '  |
-          = link_to 'Delete answer', answer_path(answer),
-                                     method: :delete,
-                                     data: { confirm: 'Are you sure?' }
+            '  |
+            = link_to 'Delete answer', answer_path(answer),
+                                       method: :delete,
+                                       data: { confirm: 'Are you sure?' }
 
 - if user_signed_in?
   = 'Add Answer'
@@ -25,7 +25,7 @@ h2 = @question.body
   .answer-errors
     = render 'shared/errors', resource: @answer
 
-  = form_with model: [@question, @answer], local: true do |f|
+  = form_with model: [@question, @answer] do |f|
     = f.label :body
     = f.text_area :body
 

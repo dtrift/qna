@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, only: %i[create destroy]
   before_action :find_question, only: %i[new create]
-  before_action :find_answer, only: %i[destroy]
+  before_action :find_answer, only: %i[update destroy]
   
   def create
     @answer = @question.answers.build(answer_params.merge(question: @question))
@@ -10,6 +10,11 @@ class AnswersController < ApplicationController
     if @answer.save
       flash.now[:notice] = 'Answer successfully added'
     end
+  end
+
+  def update
+    @question = @answer.question
+    @answer.update(answer_params)
   end
 
   def destroy

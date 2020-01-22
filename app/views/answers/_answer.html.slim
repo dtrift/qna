@@ -8,10 +8,10 @@ p = answer.body
                       method: :delete,
                       data: { confirm: 'Are you sure?' }
 
-= form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
+  = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
 
-  = f.label :body, 'Your Answer'
-  = f.text_area :body
+    = f.label :body, 'Your Answer'
+    = f.text_area :body
 
-  br
-  = f.submit 'Save'
+    br
+    = f.submit 'Save'

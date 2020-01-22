@@ -22,7 +22,7 @@ feature 'User can edit his answer', %q{
       sign_in author
       visit question_path(question)
 
-      click_on 'Edit answer'
+      click_on 'Edit'
 
       within '.answers' do
         # save_and_open_page

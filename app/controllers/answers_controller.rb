@@ -14,7 +14,11 @@ class AnswersController < ApplicationController
 
   def update
     @question = @answer.question
-    @answer.update(answer_params)
+
+    if current_user.author?(@answer)
+      @answer.update(answer_params)
+      flash.now[:notice] = 'Answer successfully updated'
+    end
   end
 
   def destroy

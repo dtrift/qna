@@ -17,7 +17,7 @@ class AnswersController < ApplicationController
 
     if current_user.author?(@answer)
       @answer.update(answer_params)
-      flash.now[:notice] = 'Answer successfully updated'
+      flash.now[:notice] = 'Answer successfully edited'
     end
   end
 

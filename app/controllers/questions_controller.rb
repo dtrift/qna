@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :find_question, only: %i[show edit update destroy]
+  before_action :find_question, only: %i[show update destroy]
 
   def index
     @questions = Question.all
@@ -22,6 +22,13 @@ class QuestionsController < ApplicationController
       redirect_to @question, notice: 'Question successfully created'
     else
       render :new
+    end
+  end
+
+  def update
+    if current_user.author?(@question)
+      @question.update(question_params)
+      flash.now[:notice] = 'Question successfully edited'
     end
   end
 

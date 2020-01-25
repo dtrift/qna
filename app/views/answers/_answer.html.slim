@@ -1,5 +1,5 @@
 li  
-  p = answer.body
+  = answer.body
 
   - if current_user&.author?(answer)
     '  |
@@ -12,7 +12,7 @@ li
     = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
 
       = f.label :body, 'Your Answer'
-      = f.text_area :body, id: :answer_body
+      = f.text_area :body
 
       br
       = f.submit 'Save'

@@ -1,3 +1,4 @@
+$('.flash').html('<%= render 'shared/flash' %>');
 $('.edit-question').html('<%= render 'shared/errors', resource: @question %>');
 
 <% if !@question.errors.present? %>

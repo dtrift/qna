@@ -24,9 +24,8 @@ feature 'Author can edit his answer', %q{
     end
 
     scenario 'edits his answer' do
-      click_on 'Edit'
-
       within '.answers' do
+        click_on 'Edit'
         fill_in 'Your Answer', with: 'Edited Answer'
 
         click_on 'Save'
@@ -38,16 +37,14 @@ feature 'Author can edit his answer', %q{
     end
 
     scenario 'edits his answer with errors' do
-      click_on 'Edit'
-
       within '.answers' do
+        click_on 'Edit'
         fill_in 'Your Answer', with: ''
 
         click_on 'Save'
       end
-
+      
       expect(page).to have_content "Body can't be blank"
-      expect(page).to_not have_content 'Answer successfully edited'
     end
 
     

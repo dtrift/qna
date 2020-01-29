@@ -4,6 +4,7 @@ RSpec.describe AnswersController, type: :controller do
   let(:author) { create :user }
   let(:user) { create :user }
   let(:question) { create :question, user: author }
+  let(:second_question) { create :question, user: user }
   let(:answer) { create :answer, question: question, user: author }
 
   describe 'POST #create' do
@@ -101,6 +102,42 @@ RSpec.describe AnswersController, type: :controller do
         patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) }, format: :js
 
         expect(response).to render_template :update
+      end
+    end
+  end
+
+  describe 'PATCH #best' do
+    before { login author }
+
+    let!(:second_answer) { create :answer, question: second_question, user: user }
+
+    context 'Author of question' do
+      it 'changes the best answer' do
+        patch :best, params: { id: answer }, format: :js
+        answer.reload
+
+        expect(answer.best).to be_truthy
+      end
+
+      it 'renders best view' do
+        patch :best, params: { id: answer }, format: :js
+
+        expect(response).to render_template :best
+      end
+    end
+
+    context 'Not an author of question' do
+      it 'tries to change best answer' do
+        patch :best, params: { id: second_answer }, format: :js
+        second_answer.reload
+
+        expect(second_answer.best).to be_falsey
+      end
+
+      it 'renders best view' do
+        patch :best, params: { id: second_answer }, format: :js
+
+        expect(response).to render_template :best
       end
     end
   end

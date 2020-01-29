@@ -1,0 +1,5 @@
+$('.answer_errors').html('');
+$('.flash').html('');
+
+$('.answers').html("<%= j render @answer.question.answers.by_best %>");
+$('.flash').html("<%= j render 'shared/flash' %>");

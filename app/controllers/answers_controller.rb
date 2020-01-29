@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, only: %i[create destroy]
   before_action :find_question, only: %i[new create]
-  before_action :find_answer, only: %i[update destroy]
+  before_action :find_answer, only: %i[update destroy best]
   
   def create
     @answer = @question.answers.build(answer_params.merge(question: @question))
@@ -27,6 +27,14 @@ class AnswersController < ApplicationController
       flash.now[:notice] = 'Answer successfully deleted'
     else
       render 'questions/show'
+    end
+  end
+
+  def best
+    if current_user.author?(@answer.question)
+      @answer.set_best!
+
+      flash.now[:notice] = 'Answer set as best'
     end
   end
 

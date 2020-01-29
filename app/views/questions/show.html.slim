@@ -25,7 +25,7 @@ h2 = @question.body
 br
 .answers
   h3 Answers
-  = render @question.answers
+  = render @question.answers.by_best
 
 br
 - if user_signed_in?

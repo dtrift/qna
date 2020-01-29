@@ -46,7 +46,6 @@ feature 'User can edit his question', %q{
       end
 
       expect(page).to have_content "Body can't be blank"
-      expect(page).to_not have_content 'Question successfully edited'
     end
 
     

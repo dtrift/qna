@@ -13,7 +13,7 @@ feature 'Set a best answers', %q{
   given!(:other_answer) { create :answer, question: question, user: user }
 
   describe 'Authenticated question author', js: true do
-    before do
+    background do
       sign_in author
       visit question_path(question)
     end

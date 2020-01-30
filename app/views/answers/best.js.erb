@@ -1,5 +1,5 @@
-$('.answer_errors').html('');
+$('.answer-errors').html('');
 $('.flash').html('');
 
-$('.answers').html("<%= j render @answer.question.answers.by_best %>");
+$('.answers').html("<%= j render @answer.question.answers %>");
 $('.flash').html("<%= j render 'shared/flash' %>");

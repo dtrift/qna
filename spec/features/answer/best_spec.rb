@@ -9,14 +9,16 @@ feature 'Set a best answers', %q{
   given(:author) { create :user }
   given(:user) { create :user }
   given(:question) { create :question, user: author }
-  given!(:answer) { create :answer, question: question, user: author }
+  given!(:answer) { create :answer, question: question, user: user }
+  given!(:other_answer) { create :answer, question: question, user: user }
 
   describe 'Authenticated question author', js: true do
-    scenario 'set the best answer' do
+    before do
       sign_in author
-
       visit question_path(question)
+    end
 
+    scenario 'set the best answer' do
       within ".answer-#{answer.id}" do
         click_on 'Best answer'
 
@@ -24,7 +26,25 @@ feature 'Set a best answers', %q{
       end
     end
 
-    scenario 'A non author of question tries to set the best answer' do
+    scenario 'choose Another best answer' do
+      within ".answer-#{answer.id}" do
+        click_on 'Best answer'
+
+        expect(page).to_not have_link 'Best answer'
+      end
+
+      within ".answer-#{other_answer.id}" do
+        click_on 'Best answer'
+
+        expect(page).to_not have_link 'Best answer'
+      end
+    end
+
+    scenario 'best answer first'
+  end
+
+  describe 'A Non author of question', js: true do
+    scenario 'tries to set the best answer' do
       sign_in user
 
       visit question_path(question)
@@ -33,9 +53,11 @@ feature 'Set a best answers', %q{
     end
   end
 
-  scenario 'Unauthenticated user tries to set the best answer' do
-    visit question_path(question)
+  describe 'Unauthenticated user', js: true  do
+    scenario 'tries to set the best answer' do
+      visit question_path(question)
 
-    expect(page).to_not have_link 'Best answer'
+      expect(page).to_not have_link 'Best answer'
+    end
   end
 end

@@ -1,6 +1,6 @@
-$('.flash').html('<%= render 'shared/flash' %>');
-$('.edit-question').html('<%= render 'shared/errors', resource: @question %>');
+$('.flash').html('<%= j render 'shared/flash' %>');
+$('.edit-question').html('<%= j render 'shared/errors', resource: @question %>');
 
-<% if !@question.errors.present? %>
+<% if @question.errors.blank? %>
   $('.edit-question').html('<%= j render @question %>');
 <% end %>

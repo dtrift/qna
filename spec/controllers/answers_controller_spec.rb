@@ -95,6 +95,8 @@ RSpec.describe AnswersController, type: :controller do
       it 'does not change answer attributes' do
         expect do
           patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) }, format: :js
+
+          answer.reload
         end.to_not change(answer, :body)
       end
 
@@ -116,7 +118,7 @@ RSpec.describe AnswersController, type: :controller do
         patch :best, params: { id: answer }, format: :js
         answer.reload
 
-        expect(answer.best).to be_truthy
+        expect(answer.best).to be true
       end
 
       it 'renders best view' do
@@ -131,7 +133,7 @@ RSpec.describe AnswersController, type: :controller do
         patch :best, params: { id: second_answer }, format: :js
         second_answer.reload
 
-        expect(second_answer.best).to be_falsey
+        expect(second_answer.best).to be false
       end
 
       it 'renders best view' do

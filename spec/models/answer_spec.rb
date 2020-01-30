@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Answer, type: :model do
   describe 'associations' do
     it { should belong_to :question }
+    it { should validate_inclusion_of(:best).in_array([true, false]) }
   end
 
   describe 'validations' do
@@ -26,6 +27,10 @@ RSpec.describe Answer, type: :model do
       best_answer.reload
 
       expect(best_answer).to_not be_best
+    end
+
+    it 'best answer first' do
+      expect(question.answers.first.best).to be true
     end
   end
 end

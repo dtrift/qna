@@ -3,14 +3,11 @@ class Answer < ApplicationRecord
   belongs_to :question
 
   validates :body, presence: true
-
-  scope :by_best, -> { order(best: :desc, created_at: :asc) }
+  validates :best, inclusion: [true, false]
 
   def set_best!
-    current_best = question.answers.find_by(best: true)
-
     transaction do
-      current_best.update!(best: false) if current_best
+      question.answers.update_all(best: false)
       update!(best: true)
     end
   end

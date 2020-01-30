@@ -32,7 +32,7 @@ feature 'User can create answer', %q{
     end
   end
 
-  scenario 'Unuthenticated user try gives an answer' do
+  scenario 'Unauthenticated user try gives an answer' do
     visit question_path(question)
 
     expect(page).to_not have_content 'Add answer'

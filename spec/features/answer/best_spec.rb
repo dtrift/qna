@@ -40,7 +40,15 @@ feature 'Set a best answers', %q{
       end
     end
 
-    scenario 'best answer first'
+    scenario 'sees the best answer first' do
+      within ".answer-#{answer.id}" do
+        click_on 'Best answer'
+      end
+
+      within '.answers' do
+        expect(first(:xpath, './/..')).to have_css ".answer-#{answer.id}"
+      end
+    end
   end
 
   describe 'A Non author of question', js: true do

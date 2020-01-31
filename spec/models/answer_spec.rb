@@ -30,7 +30,7 @@ RSpec.describe Answer, type: :model do
     end
 
     it 'best answer first' do
-      expect(question.answers.first.best).to be true
+      expect(question.answers).to eq([best_answer, answer])
     end
   end
 end

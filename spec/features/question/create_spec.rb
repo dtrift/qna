@@ -34,8 +34,8 @@ feature 'User can create question', %q{
     scenario 'asks a question with attached files' do
       fill_in 'Title', with: 'SomeTitle'
       fill_in 'Body', with: 'SomeBody'
-
       attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+      
       click_on 'Create'
 
       expect(page).to have_link 'rails_helper.rb'

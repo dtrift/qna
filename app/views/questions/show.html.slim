@@ -17,12 +17,13 @@ h2 = @question.body
                         data: { confirm: 'Are you sure?' }
 
     = form_with model: @question, class: 'hidden', html: { id: "edit-question-#{@question.id}" } do |f|
-      = f.label :title
-      = f.text_field :title, id: :question_title    
+      p
+        = f.label :title
+        = f.text_field :title, id: :question_title    
 
-      br
-      = f.label :body
-      = f.text_area :body, id: :question_body
+      p
+        = f.label :body
+        = f.text_area :body, id: :question_body
 
       br
       = f.submit 'Save'
@@ -40,8 +41,13 @@ br
     = render 'shared/errors', resource: @answer
 
   = form_with model: [@question, @answer], class: 'new-answer' do |f|
-    = f.label :body
-    = f.text_area :body
+    p
+      = f.label :body
+      = f.text_area :body
+
+    p
+      = f.label :files
+      = f.file_field :files, multiple: true 
 
     br
     = f.submit 'Add answer'

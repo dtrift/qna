@@ -1,7 +1,9 @@
 li class="answer-#{answer.id}"
-  = answer.body
+  p
+    = answer.body
 
   - if answer.files.attached?
+    ' Files:
     - answer.files.each do |file|
       p
         = link_to file.filename.to_s, url_for(file)
@@ -25,7 +27,7 @@ li class="answer-#{answer.id}"
       p
         = f.label :body, 'Your Answer'
         = f.text_area :body, id: :answer_body
-        
+
       p
         = f.label :files
         = f.file_field :files, multiple: true

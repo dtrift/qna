@@ -35,7 +35,7 @@ li class="answer-#{answer.id}"
 
       p
         = f.label :files
-        = f.file_field :files, multiple: true
+        = f.file_field :files, multiple: true, direct_upload: true
 
       br
       = f.submit 'Save'

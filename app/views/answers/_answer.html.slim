@@ -8,9 +8,10 @@ li class="answer-#{answer.id}"
           p class="attachment-#{file.id}"
             = link_to file.filename.to_s, url_for(file)
             '
-            = link_to 'x', attachment_path(file),
-                           method: :delete,
-                           remote: true
+            - if current_user&.author?(answer) 
+              = link_to 'x', attachment_path(file),
+                             method: :delete,
+                             remote: true
 
   - if current_user&.author?(answer.question) && !answer.best?
     = button_to 'Best answer', best_answer_path(answer),

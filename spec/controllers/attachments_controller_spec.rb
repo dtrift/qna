@@ -9,7 +9,7 @@ RSpec.describe AttachmentsController, type: :controller do
   describe 'DELETE #destroy' do
     before { login author }
 
-    context 'Author can deletes his attachment' do
+    context 'Authenticated Author' do
       it 'delete the attachment' do
         expect { delete :destroy, params: { id: answer.files.first, question_id: question }, format: :js }
           .to change(ActiveStorage::Attachment, :count).by(-1)
@@ -21,8 +21,13 @@ RSpec.describe AttachmentsController, type: :controller do
       end
     end
 
-    context 'Not the author deletes attachment' do
-      it 'try delete the attachment'
+    context 'Authenticated Non author' do
+      let!(:second_answer) { create(:answer, :add_file, question: question, user: user) }
+
+      it 'trying to delete another attachment' do
+        expect { delete :destroy, params: { id: second_answer.files.first, question_id: question }, format: :js }
+          .to_not change(ActiveStorage::Attachment, :count)
+      end
     end
   end
 end

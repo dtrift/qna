@@ -38,11 +38,6 @@ class AnswersController < ApplicationController
     end
   end
 
-  # def delete_file_attachment
-  #   @attachment = ActiveStorage::Attachment.find(params[:id])
-  #   @attachment.purge
-  # end
-
   private
 
   def find_question

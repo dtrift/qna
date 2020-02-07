@@ -1,6 +1,7 @@
 li class="answer-#{answer.id}"
   p
     = answer.body
+    
   .attached-files
     - if answer.files.attached?
       ' Files:

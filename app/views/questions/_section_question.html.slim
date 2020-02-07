@@ -3,6 +3,7 @@ h2 = @question.body
 
 .attached-files
   - if @question.files.attached?
+    ' Files:
     - @question.files.each do |file|
       p class="attachment-#{file.id}"
         = link_to file.filename.to_s, url_for(file)

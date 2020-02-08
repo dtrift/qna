@@ -1,17 +1,8 @@
 h1 = @question.title
 h2 = @question.body
 
-.attached-files
-  - if @question.files.attached?
-    ' Files:
-    - @question.files.each do |file|
-      p class="attachment-#{file.id}"
-        = link_to file.filename.to_s, url_for(file)
-        '
-        - if current_user&.author?(@question) 
-          = link_to 'x', attachment_path(file),
-                         method: :delete,
-                         remote: true
+p
+  = render partial: 'attachments/attachment', resource: @question
 
 - if current_user&.author?(@question)
 

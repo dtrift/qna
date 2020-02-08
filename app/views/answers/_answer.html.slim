@@ -2,7 +2,7 @@ li class="answer-#{answer.id}"
   p
     = answer.body
 
-    = render partial: 'attachments/attachment', resource: answer
+    = render partial: 'attachments/attachment', locals: { resource: answer }
 
   - if current_user&.author?(answer.question) && !answer.best?
     = button_to 'Best answer', best_answer_path(answer),

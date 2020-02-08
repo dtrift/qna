@@ -2,7 +2,7 @@ h1 = @question.title
 h2 = @question.body
 
 p
-  = render partial: 'attachments/attachment', resource: @question
+  = render partial: 'attachments/attachment', locals: { resource: @question }
 
 - if current_user&.author?(@question)
 

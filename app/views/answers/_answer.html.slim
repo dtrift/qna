@@ -1,10 +1,14 @@
 li class="answer-#{answer.id}"
-  = answer.body
+  p
+    = answer.body
+
+    = render partial: 'attachments/attachment', locals: { resource: answer }
 
   - if current_user&.author?(answer.question) && !answer.best?
     = button_to 'Best answer', best_answer_path(answer),
                                method: :patch, remote: true
 
+  br
   - if current_user&.author?(answer)
     '
     = link_to 'Edit', '#', class: 'edit-answer-link',
@@ -16,9 +20,13 @@ li class="answer-#{answer.id}"
                         data: { confirm: 'Are you sure?', answer_id: answer.id }
 
     = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
+      p
+        = f.label :body, 'Your Answer'
+        = f.text_area :body, id: :answer_body
 
-      = f.label :body, 'Your Answer'
-      = f.text_area :body, id: :answer_body
+      p
+        = f.label :files
+        = f.file_field :files, multiple: true, direct_upload: true
 
       br
       = f.submit 'Save'

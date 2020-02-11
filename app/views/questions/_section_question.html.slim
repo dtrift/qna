@@ -1,8 +1,17 @@
 h1 = @question.title
 h2 = @question.body
 
-p
-  = render partial: 'attachments/attachment', locals: { resource: @question }
+.links
+  - if @question.links.exists?
+    p Links:
+    ul
+      - @question.links.each do |link|
+        li
+          = link_to link.name, link.url
+
+.files
+  p
+    = render partial: 'attachments/attachment', locals: { resource: @question }
 
 - if current_user&.author?(@question)
 

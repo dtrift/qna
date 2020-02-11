@@ -20,7 +20,17 @@ br
 
     p
       = f.label :files
-      = f.file_field :files, multiple: true 
+      = f.file_field :files, multiple: true
+
+    p Add link:
+    p
+      = f.fields_for :links do |link|
+        p
+          = link.label :name, 'Link name'
+          = link.text_field :name
+        p
+          = link.label :url
+          = link.text_field :url
 
     br
     = f.submit 'Add answer'

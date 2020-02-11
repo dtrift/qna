@@ -2,13 +2,20 @@ li class="answer-#{answer.id}"
   p
     = answer.body
 
+    .links
+      - if answer.links.exists?
+        p Links:
+        ul
+          - answer.links.each do |link|
+            li
+              = link_to link.name, link.url
+
     = render partial: 'attachments/attachment', locals: { resource: answer }
 
   - if current_user&.author?(answer.question) && !answer.best?
     = button_to 'Best answer', best_answer_path(answer),
                                method: :patch, remote: true
 
-  br
   - if current_user&.author?(answer)
     '
     = link_to 'Edit', '#', class: 'edit-answer-link',

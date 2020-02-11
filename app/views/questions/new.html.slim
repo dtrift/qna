@@ -13,17 +13,10 @@
     = f.label :files
     = f.file_field :files, multiple: true
 
-  p Add link:
-  p
-    = f.fields_for :links do |link|
-      p
-        = link.label :name, 'Link name'
-        = link.text_field :name
-      p
-        = link.label :url
-        = link.text_field :url
+  p Add link
+  = render 'links/form', f: f
 
-  br
-  = f.submit 'Create'
+  p
+    = f.submit 'Create'
 
 = link_to 'Back', questions_path

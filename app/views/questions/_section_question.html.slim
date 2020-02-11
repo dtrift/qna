@@ -1,13 +1,7 @@
 h1 = @question.title
 h2 = @question.body
 
-.links
-  - if @question.links.exists?
-    p Links:
-    ul
-      - @question.links.each do |link|
-        li
-          = link_to link.name, link.url
+= render partial: 'links/list', locals: { resource: @question }
 
 .files
   p

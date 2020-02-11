@@ -1,0 +1,7 @@
+.links
+  - if resource.links.exists?
+    p Links:
+    ul
+      - resource.links.each do |link|
+        li
+          = link_to link.name, link.url

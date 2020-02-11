@@ -6,11 +6,11 @@ feature 'User can add links to question', %q{
   I'd like to be abble to add links
 } do
 
-  given(:author) { create :user }
+  given(:user) { create :user }
   given(:gist_link) { 'https://gist.github.com/dtrift/62fd494dfdc60ebcf4e469c8f5c43268' }
 
   scenario 'User adds links when asks question' do
-    sign_in author
+    sign_in user
     visit new_question_path
 
     fill_in 'Title', with: 'Some Title'

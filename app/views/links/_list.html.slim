@@ -1,12 +1,11 @@
-.links
-  - if resource.links.exists?
-    p Links:
-    ul
-      - resource.links.each do |link|
-        li class="link-#{link.id}"
-          = link_to link.name, link.url
-          '
-          - if current_user&.author?(resource) 
-            = link_to 'x', link_path(link),
-                           method: :delete,
-                           remote: true
+- if resource.links.exists?
+  p Links:
+  ul
+    - resource.links.each do |link|
+      li class="link-#{link.id}"
+        = link_to link.name, link.url
+        '
+        - if current_user&.author?(resource) 
+          = link_to 'x', link_path(link),
+                         method: :delete,
+                         remote: true

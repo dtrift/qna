@@ -29,5 +29,7 @@ li class="answer-#{answer.id}"
         = f.label :files
         = f.file_field :files, multiple: true, direct_upload: true
 
+      = render partial: 'links/add', locals: { f: f }
+
       br
       = f.submit 'Save'

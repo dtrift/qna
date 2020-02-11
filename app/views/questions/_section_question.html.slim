@@ -1,8 +1,9 @@
 h1 = @question.title
 h2 = @question.body
 
-p
-  = render partial: 'links/list', locals: { resource: @question }
+.links
+  p
+    = render partial: 'links/list', locals: { resource: @question }
 
 .files
   p
@@ -30,6 +31,8 @@ p
       p
         = f.label :files
         = f.file_field :files, multiple: true, direct_upload: true
+
+      = render partial: 'links/add', locals: { f: f }
 
       p
         = f.submit 'Save'

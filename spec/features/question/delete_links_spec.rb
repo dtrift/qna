@@ -12,18 +12,18 @@ feature 'User can remove links from question', %q{
   given!(:gist_link) { 'https://gist.github.com/dtrift/62fd494dfdc60ebcf4e469c8f5c43268' }
   given!(:link) { create :link, name: 'Test link', url: gist_link, linkable: question }
 
-  scenario 'Author removes link from question', js: true do
+  scenario 'Author can removes link from question', js: true do
     sign_in author
     visit question_path(question)
 
-    within '.links' do    
+    within '.links' do
       click_on 'x'
     end
 
     expect(page).to_not have_link 'Test link', href: gist_link
   end
 
-  scenario 'Authenticated user tries to removes the link' do 
+  scenario 'Authenticated user can not to removes the link' do
     sign_in user
     visit question_path(question)
 
@@ -32,7 +32,7 @@ feature 'User can remove links from question', %q{
     end  
   end
 
-  scenario 'Unauthenticated user tries to removes the link' do
+  scenario 'Unauthenticated user can not to removes the link' do
     visit question_path(question)
 
     within '.links' do    

@@ -23,7 +23,11 @@ br
       = f.file_field :files, multiple: true
 
     p Add link
-    = render 'links/form', f: f
+    = f.fields_for :links do |link|
+      = render 'links/link_fields', f: link
+
+    .add-link
+      = link_to_add_association 'Add link', f, :links, partial: 'links/link_fields'
 
     p
       = f.submit 'Add answer'

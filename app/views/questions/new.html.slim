@@ -4,8 +4,7 @@
 
   .question-fields
     p
-      = f.label :title, 'Question title'
-      ':
+      = f.label :title, 'Question title:'
       = f.text_field :title
 
     p
@@ -24,8 +23,7 @@
     p Add Bage
     = f.fields_for :badge do |badge|
       p
-        = badge.label :name, 'Badge title'
-        ':
+        = badge.label :name, 'Badge title:'
         = badge.text_field :name
       p
         = badge.label :image

@@ -8,15 +8,13 @@ RSpec.describe LinksController, type: :controller do
 
   describe 'DELETE #destroy' do
     context 'Authenticated Author' do
-      it 'delete the link' do
-        login author
+      before { login author }
 
+      it 'delete the link' do
         expect { delete :destroy, params: { id: link }, format: :js }.to change(Link, :count).by(-1)
       end
 
-      it 'reder template destroy' do
-        login author
-        
+      it 'render template destroy' do
         delete :destroy, params: { id: link }, format: :js
 
         expect(response).to render_template :destroy
@@ -24,16 +22,28 @@ RSpec.describe LinksController, type: :controller do
     end
 
     context 'Authenticated User' do
-      it 'trying to delete link' do
-        login user
+      before { login user }
 
+      it 'trying to delete link' do
         expect { delete :destroy, params: { id: link }, format: :js }.to_not change(Link, :count)
+      end
+
+      it 're-render template destroy' do
+        delete :destroy, params: { id: link }, format: :js
+
+        expect(response).to render_template :destroy
       end
     end
 
     context 'Guest' do
       it 'trying to delete link' do
         expect { delete :destroy, params: { id: link }, format: :js }.to_not change(Link, :count)
+      end
+
+      it 'not render template destroy' do
+        delete :destroy, params: { id: link }, format: :js
+
+        expect(response).to_not render_template :destroy
       end
     end
   end

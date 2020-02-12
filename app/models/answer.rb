@@ -16,7 +16,7 @@ class Answer < ApplicationRecord
       question.answers.update_all(best: false)
       update!(best: true)
 
-      question.set_badge!(user)
+      question.badge&.update!(user: user)
     end
   end
 end

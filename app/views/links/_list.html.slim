@@ -3,9 +3,15 @@
   ul
     - resource.links.each do |link|
       li class="link-#{link.id}"
-        = link_to link.name, link.url
+        = link_to link.name, link.url, target: :blank
         '
         - if current_user&.author?(resource) 
           = link_to 'x', link_path(link),
                          method: :delete,
                          remote: true
+        - if link.gist?
+          - GistService.new(link).content.each do |filename, content|
+            h3
+              = filename
+            p
+              = content.truncate(250)

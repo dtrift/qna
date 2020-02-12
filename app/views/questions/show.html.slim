@@ -3,8 +3,9 @@
 
 br
 .answers
-  h3 Answers
-  = render @question.answers
+  - if @question.answers.present?
+    h3 Answers
+    = render @question.answers
 
 br
 - if user_signed_in?
@@ -22,12 +23,7 @@ br
       = f.label :files
       = f.file_field :files, multiple: true
 
-    p Add link
-    = f.fields_for :links do |link|
-      = render 'links/link_fields', f: link
-
-    .add-link
-      = link_to_add_association 'Add link', f, :links, partial: 'links/link_fields'
+    = render partial: 'links/add', locals: { f: f }
 
     p
       = f.submit 'Add answer'

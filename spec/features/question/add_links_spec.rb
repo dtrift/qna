@@ -13,7 +13,7 @@ feature 'User can add links to question', %q{
     sign_in user
     visit new_question_path
 
-    fill_in 'Title', with: 'Some Title'
+    fill_in 'Question title', with: 'Some Title'
     fill_in 'Body', with: 'Some Body'
 
     fill_in 'Link name', with: 'My gist'

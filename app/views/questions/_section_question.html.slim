@@ -1,6 +1,14 @@
 h1 = @question.title
 h2 = @question.body
 
+.badge
+  - if @question.badge.present?
+    h3 Badge:
+    p
+      = @question.badge.name
+    p
+      = image_tag @question.badge.image, size: '100x100'
+
 .links
   p
     = render partial: 'links/list', locals: { resource: @question }

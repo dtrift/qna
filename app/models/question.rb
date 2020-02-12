@@ -11,4 +11,8 @@ class Question < ApplicationRecord
   has_many_attached :files
 
   validates :title, :body, presence: true
+
+  def set_badge!(user)
+    badge&.update!(user: user)
+  end
 end

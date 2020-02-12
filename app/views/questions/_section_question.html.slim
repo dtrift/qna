@@ -1,8 +1,18 @@
+.received-badges
+  - if current_user&.badges.present?
+    h2 Received badges
+    - current_user&.badges.each do |badge|
+      h3 Badge: #{badge.name}
+    
+      p Question: #{badge.question.title} 
+      p
+        = image_tag badge.image, size: '100x100'
+
 h1 = @question.title
 h2 = @question.body
 
 .badge
-  - if @question.badge.present?
+  - if @question.badge.present? && current_user&.author?(@question)
     h3 Badge:
     p
       = @question.badge.name

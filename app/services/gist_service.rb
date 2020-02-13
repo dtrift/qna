@@ -16,7 +16,7 @@ class GistService
   end
 
   def hash_link
-    @link.url.split('/').last
+    @link.split('/').last
   end
 
   def get_gist

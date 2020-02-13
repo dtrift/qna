@@ -7,4 +7,8 @@ class Link < ApplicationRecord
   def gist?
     url.include?('gist.github.com')
   end
+
+  def gist_content
+    GistService.new(url).content
+  end
 end

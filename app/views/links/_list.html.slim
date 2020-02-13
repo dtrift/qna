@@ -10,8 +10,9 @@
                          method: :delete,
                          remote: true
         - if link.gist?
-          - GistService.new(link).content.each do |filename, content|
-            h3
-              = filename
-            p
-              = content.truncate(250)
+          p
+            - link.gist_content.each do |filename, content|
+              h3
+                = filename
+              p
+                = content.truncate(250)

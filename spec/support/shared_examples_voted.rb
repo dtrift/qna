@@ -1,10 +1,7 @@
 RSpec.shared_examples 'voted' do
   let(:author) { create :user }
-  let(:user) { create :user }
-  # let!(:model) { create(described_class.controller_name.classify.constantize, user: author) }
-  
+  let(:user) { create :user }  
   let!(:model) { create(described_class.controller_name.classify.downcase.to_sym, user: author) }
-  # let!(:voteable_user) { create(model, author) }
 
   describe 'POST #positive' do
     before { login user }

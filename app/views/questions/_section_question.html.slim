@@ -1,9 +1,8 @@
-.received-badges
-  - if current_user&.badges.present?
+- if current_user&.badges.present?
+  .received-badges  
     h2 Received badges
     - current_user&.badges.each do |badge|
       h3 Badge: #{badge.name}
-    
       p Question: #{badge.question.title} 
       p
         = image_tag badge.image, size: '100x100'
@@ -11,8 +10,11 @@
 h1 = @question.title
 h2 = @question.body
 
-.badge
-  - if @question.badge.present? && current_user&.author?(@question)
+.vote
+  = render partial: 'votes/vote', locals: { resource: @question }
+
+- if @question.badge.present? && current_user&.author?(@question)
+  .badge
     h3 Badge:
     p
       = @question.badge.name
@@ -28,7 +30,6 @@ h2 = @question.body
     = render partial: 'attachments/attachment', locals: { resource: @question }
 
 - if current_user&.author?(@question)
-
   .edit-question
     = link_to 'Edit', '#', class: 'edit-question-link',
                       data: { question_id: @question.id }

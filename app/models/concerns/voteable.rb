@@ -6,11 +6,11 @@ module Voteable
   end
 
   def positive(user)
-    vote(user, 1)
+    vote!(user, 1)
   end
 
   def negative(user)
-    vote(user, -1)
+    vote!(user, -1)
   end
 
   def rating
@@ -19,7 +19,7 @@ module Voteable
 
   private
 
-  def vote(user, value)
+  def vote!(user, value)
     votes.create!(user: user, score: value) unless user.voted?(self)
   end
 end

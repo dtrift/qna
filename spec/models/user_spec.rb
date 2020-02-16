@@ -34,8 +34,16 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe 'User voted' do
+  describe 'User positive voted' do
     before { question.positive(user) }
+
+    it 'for the question' do
+      expect(user).to be_voted(question)
+    end
+  end
+
+  describe 'User negative voted' do
+    before { question.negative(user) }
 
     it 'for the question' do
       expect(user).to be_voted(question)

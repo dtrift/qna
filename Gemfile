@@ -34,6 +34,8 @@ gem 'jbuilder', '~> 2.7'
 gem 'slim-rails'
 # js template engine
 gem 'skim'
+# Rails variables in js
+gem 'gon'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false

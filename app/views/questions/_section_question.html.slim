@@ -7,9 +7,9 @@
       p
         = image_tag badge.image, size: '100x100'
 
-p Author: #{@question.user.email}
 h1 = @question.title
-h2 = @question.body
+p = @question.body
+p Author: #{@question.user.email}
 
 .vote
   = render partial: 'votes/vote', locals: { resource: @question }

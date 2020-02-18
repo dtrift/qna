@@ -17,7 +17,6 @@ module Qna
     # the framework and any gems in your application.
 
     # config.action_cable.disable_request_forgery_protection = false
-    # config.action_cable.mount_path = '/websocket'
 
     config.generators do |g|
 

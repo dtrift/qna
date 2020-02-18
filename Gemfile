@@ -33,7 +33,7 @@ gem 'jbuilder', '~> 2.7'
 # Template Slim
 gem 'slim-rails'
 # js template engine
-gem 'skim'
+# gem 'skim'
 # Rails variables in js
 gem 'gon'
 

@@ -54,4 +54,11 @@ class AnswersController < ApplicationController
     params.require(:answer).permit(:body, files: [],
                                    links_attributes: [:id, :name, :url, :_destroy])
   end
+
+  def publish_answer
+    ActionCable.server.broadcast(
+      "question-#{@question.id}-answers",
+        answer: @answer
+        )
+  end
 end

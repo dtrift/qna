@@ -11,6 +11,21 @@ h1 = @question.title
 p = @question.body
 p Author: #{@question.user.email}
 
+.question-comments
+  - if user_signed_in?
+    = link_to 'Add comment', '#',
+              class: 'new-comment-link',
+              data: { klass: @question.class.to_s.downcase,
+                      id: @question.id }
+                      
+    = render partial: 'comments/form', locals: { resource: @question }
+
+  - if @question.comments.any?
+    h3 Comments:
+    = render @question.comments
+  - else
+    p No comments yet
+
 .vote
   = render partial: 'votes/vote', locals: { resource: @question }
 

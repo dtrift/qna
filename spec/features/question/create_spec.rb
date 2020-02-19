@@ -100,7 +100,6 @@ feature 'User can create question', %q{
         visit questions_path
 
         expect(page).to have_content 'SomeTitle'
-        expect(page).to have_content 'SomeBody'
       end
     end
   end

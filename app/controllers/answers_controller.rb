@@ -70,6 +70,7 @@ class AnswersController < ApplicationController
     ActionCable.server.broadcast(
       "question-#{@question.id}-answers",
         answer: @answer,
+        question_author: @answer.question.user,
         files: answer_files,
         links: @answer.links
         )

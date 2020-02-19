@@ -13,6 +13,9 @@ require("jquery")
 require("../answers")
 require("../questions")
 require("../votes")
+require("templates/answer.jst.pug")
+
+
 // require("skim")
 
 // Uncomment to copy all static images under ../images to the output folder and reference
@@ -21,3 +24,6 @@ require("../votes")
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
+// const template = require('../templates/answer.hbs');
+// const Handlebars = require("handlebars");
+// const template = Handlebars.compile("answer");

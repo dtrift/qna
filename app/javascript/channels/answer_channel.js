@@ -2,21 +2,26 @@ import consumer from "./consumer"
 
 consumer.subscriptions.create("AnswerChannel", {
   connected() {
-    // Called when the subscription is ready for use on the server
     var questionId = $('.question').data('question-id');
     this.perform('follow', { question_id: questionId });
   },
 
   disconnected() {
-    // Called when the subscription has been terminated by the server
-  },
+
+   },
 
   received(data) {
-    // Called when there's incoming data on the websocket for this channel
-    console.log('Received')
+    console.log('Received data ->', data);
+    var answerTemplate = pug.compile('templates/answer.jst.pug');
 
-    // if gon.current_user && (gon.current_user.id != data.user)
+    // $('.answers').append(data)
 
+    // var answerTemplate = handlebars.compile('answer-template');
+    // $('.answers').append(answerTemplate({
+    //   answer: data.answer,
+    //   files: data.files,
+    //   links: data.links
+    // }))
     // $('.answers').repalceWith(JST['templates/answer']({
       // answer: data.answer,
       // user: data.user,

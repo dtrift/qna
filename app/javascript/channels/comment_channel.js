@@ -6,14 +6,8 @@ consumer.subscriptions.create("CommentChannel", {
     this.perform('follow', { question_id: questionId });
   },
 
-  disconnected() {},
-
   received(data) {
-    console.log('Received data ->', data);
-
     var resource = $('.question-comments');
-
-    console.log(resource)
 
     if ((resource) && (data['comment']['user_id'] != gon.current_user)) {
       var comment = renderComment(data['comment'], data['user_email']);

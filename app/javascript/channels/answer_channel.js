@@ -6,18 +6,12 @@ consumer.subscriptions.create("AnswerChannel", {
     this.perform('follow', { question_id: questionId });
   },
 
-  disconnected() {},
-
   received(data) {
-    console.log('Received data ->', data);
-    // var answerTemplate = Handlebars.compile("Name: {{name}}")
-
     var answers = $('.answers');
 
     if ((answers) && (data['answer']['user_id'] != gon.current_user)) {
       var answer = renderAnswer(data['answer'], data['question_author']);
       var li = document.createElement('li');
-      // li.setAttribute('data-id', data['answer']['id']);
       li.classList.add('answer-' + data['answer']['id']);
       li.innerHTML = answer;
       answers.append(li);  
@@ -26,7 +20,7 @@ consumer.subscriptions.create("AnswerChannel", {
 });
 
 function renderAnswer(answer, question_author) {
-  var sections = '';
+  var sections = ``;
 
   sections += `
     <p>${answer['body']}</p>
@@ -66,7 +60,6 @@ function renderAnswer(answer, question_author) {
   var form = `
     <form class="hidden" id="edit-answer-${answer['id']}" enctype="multipart/form-data" action="/answers/${answer['id']}" accept-charset="UTF-8" data-remote="true" method="post">
       <input type="hidden" name="_method" value="patch">
-      <input type="hidden" name="authenticity_token" value="cG6Y1eeMTBW7t9dCJCuWxqGHepcaGDNwLAGzuhEHhKoN/NQxZt3nl/ZJ7j7fZSGVCikWVNbIjdgUJWRdwIDuFQ=="">
       <div class="form-group">
         <label for="answer_body">Your answer</label>
         <textarea class="form-control" name="answer[body]" id="answer_body">${answer['body']}</textarea>

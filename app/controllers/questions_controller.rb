@@ -63,6 +63,8 @@ class QuestionsController < ApplicationController
   end
 
   def publish_question
+    return if @question.errors.present?
+
     ActionCable.server.broadcast(
       'question_channel',
       ApplicationController.render(

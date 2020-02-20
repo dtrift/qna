@@ -21,9 +21,7 @@ feature 'User can create answer', %q{
       click_on 'Add answer'
 
       expect(current_path).to eq question_path(question)
-      within '.answers' do
-        expect(page).to have_content 'Some Answer'
-      end
+      expect(page).to have_content 'Some Answer'
     end
 
     scenario 'gives an answer with errors' do
@@ -64,6 +62,24 @@ feature 'User can create answer', %q{
         visit question_path(question)
 
         expect(page).to have_content 'Some Answer'
+      end
+    end
+
+    scenario 'answer with errors not appears on another user\'s page' do
+      Capybara.using_session('user') do
+        sign_in user
+        visit question_path(question)
+
+        fill_in 'Body', with: ''
+        click_on 'Add answer'
+
+        expect(page).to have_content "Body can't be blank"
+      end
+
+      Capybara.using_session('guest') do
+        visit question_path(question)
+        
+        expect(page).to_not have_css '.answers'
       end
     end
   end

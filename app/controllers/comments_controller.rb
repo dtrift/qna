@@ -24,6 +24,8 @@ class CommentsController < ApplicationController
   end
 
   def publish_comment
+    return if @comment.errors.present?
+
     question_id = @klass == Question ? @resource.id : @resource.question.id
 
     ActionCable.server.broadcast(

@@ -7,10 +7,6 @@
     "@rails/ujs": "^6.0.2-1",
     "@rails/webpacker": "4.2.2",
     "cocoon": "github:nathanvda/cocoon#c24ba53",
-    "ejs": "^3.0.1",
-    "ejs-compiled-loader": "^1.1.0",
-    "handlebars": "^4.7.3",
-    "handlebars-loader": "^1.7.1",
     "jquery": "^3.4.1",
     "popper.js": "^1.16.1",
     "turbolinks": "^5.2.0"
@@ -18,7 +14,6 @@
   "version": "0.1.0",
   "devDependencies": {
     "pug": "^2.0.4",
-    "pug-plain-loader": "^1.0.0",
     "webpack-dev-server": "^3.10.1"
   }
 }

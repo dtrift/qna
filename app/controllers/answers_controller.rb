@@ -4,12 +4,12 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!, only: %i[create destroy]
   before_action :find_question, only: %i[new create]
   before_action :find_answer, only: %i[update destroy best]
-  before_action :new_comment, only: %i[create update best]
   after_action :publish_answer, only: %i[create]
   
   def create
     @answer = @question.answers.build(answer_params.merge(question: @question))
     @answer.user = current_user
+    @comment = Comment.new
 
     if @answer.save
       flash.now[:notice] = 'Answer successfully added'
@@ -68,6 +68,8 @@ class AnswersController < ApplicationController
   end
 
   def publish_answer
+    return if @answer.errors.present?
+
     ActionCable.server.broadcast(
       "question-#{@question.id}-answers",
         answer: @answer,
@@ -75,9 +77,5 @@ class AnswersController < ApplicationController
         files: answer_files,
         links: @answer.links
         )
-  end
-
-  def new_comment
-    @comment = Comment.new
   end
 end

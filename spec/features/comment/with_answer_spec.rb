@@ -60,5 +60,26 @@ feature 'User can post a comment', %q{
         expect(page).to have_content 'Some Comment'
       end
     end
+
+    scenario 'comment with errors not appears on another user\'s page' do
+      Capybara.using_session('user') do
+        sign_in user
+        visit question_path(question)
+
+        within '.answer-comments' do
+          click_on 'Add comment'
+          fill_in 'Your comment', with: ''
+          click_on 'Post'
+        end
+
+        expect(page).to have_content "Content can't be blank"
+      end
+
+      Capybara.using_session('guest') do
+        visit question_path(question)
+
+        expect(page).to_not have_css '.answer-comments .comments'
+      end
+    end
   end
 end

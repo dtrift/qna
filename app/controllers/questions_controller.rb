@@ -3,7 +3,6 @@ class QuestionsController < ApplicationController
 
   before_action :authenticate_user!, except: %i[index show]
   before_action :find_question, only: %i[show update destroy]
-  before_action :new_comment, only: %i[show update]
 
   after_action :publish_question, only: %i[create]
 
@@ -14,6 +13,7 @@ class QuestionsController < ApplicationController
   def show
     @answer = Answer.new
     @answer.links.build
+    @comment = Comment.new
   end
 
   def new
@@ -72,9 +72,5 @@ class QuestionsController < ApplicationController
         locals: { question: @question }
         )
       )
-  end
-
-  def new_comment
-    @comment = Comment.new
   end
 end

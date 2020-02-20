@@ -6,6 +6,10 @@ consumer.subscriptions.create("CommentChannel", {
     this.perform('follow', { question_id: questionId });
   },
 
+  disconnected() {
+    return this.perform('unfollow');
+  },
+
   received(data) {
     var resource = $('.question-comments');
 

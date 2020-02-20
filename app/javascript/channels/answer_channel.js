@@ -6,6 +6,10 @@ consumer.subscriptions.create("AnswerChannel", {
     this.perform('follow', { question_id: questionId });
   },
 
+  disconnected() {
+    return this.perform('unfollow');
+  },
+
   received(data) {
     var answers = $('.answers');
 

@@ -2,6 +2,21 @@ li class="answer-#{answer.id}"
   p
     = answer.body
 
+    .answer-comments
+      - if user_signed_in?
+        = link_to 'Add comment', '#',
+                  class: 'new-comment-link',
+                  data: { klass: answer.class.to_s.downcase,
+                          id: answer.id }
+                          
+        = render partial: 'comments/form', locals: { resource: answer }
+
+      - if answer.comments.any?
+        h3 Comments:
+        = render answer.comments
+      - else
+        p No comments yet
+
     .vote
       = render partial: 'votes/vote', locals: { resource: answer }
 

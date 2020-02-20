@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: %i[create]
   before_action :find_resource, only: %i[create]
 
   def create

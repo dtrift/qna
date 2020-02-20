@@ -9,36 +9,41 @@ feature 'User can post a comment', %q{
   given(:author) { create :user }
   given(:user) { create :user }
   given!(:question) { create :question, user: author }
-  given!(:answer) { create :answer, question: question, user: user }
+  given!(:answer) { create :answer, question: question, user: author }
   
-  scenario 'User post a comment', js: true do
-    visit question_path(question)
-
-    within '.answer-comments' do
-      click_on 'Add comment'
-      fill_in 'Your comment', with: 'Some Comment'
-      click_on 'Post'
+  describe 'Authenticated user', js: true do
+    background do
+      sign_in user
+      
+      visit question_path(question)
     end
 
-    expect(page).to have_content 'Some Comment'
-  end
+    scenario 'User post a comment' do
+      within '.answer-comments' do
+        click_on 'Add comment'
+        fill_in 'Your comment', with: 'Some Comment'
+        click_on 'Post'
+      end
 
-  scenario 'User post a comment with errors', js: true do
-    visit question_path(question)
-
-    within '.answer-comments' do
-      click_on 'Add comment'
-      click_on 'Post'
+      expect(page).to have_content 'Some Comment'
     end
 
-    expect(page).to have_content 'Сontent can\'t be blank'
+    scenario 'User post a comment with errors' do
+      within '.answer-comments' do
+        click_on 'Add comment'
+        fill_in 'Your comment', with: ''
+        click_on 'Post'
+      end
+
+      expect(page).to have_content "Content can't be blank"
+    end
   end
 
   describe 'Multiple sessions', js: true do
     scenario 'comment appears on another user\'s page' do
       Capybara.using_session('user') do
         sign_in user
-        visit questions_path
+        visit question_path(question)
 
         within '.answer-comments' do
           click_on 'Add comment'
@@ -50,7 +55,7 @@ feature 'User can post a comment', %q{
       end
 
       Capybara.using_session('guest') do
-        visit questions_path
+        visit question_path(question)
 
         expect(page).to have_content 'Some Comment'
       end

@@ -4,6 +4,7 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!, only: %i[create destroy]
   before_action :find_question, only: %i[new create]
   before_action :find_answer, only: %i[update destroy best]
+  before_action :new_comment, only: %i[create update best]
   after_action :publish_answer, only: %i[create]
   
   def create
@@ -74,5 +75,9 @@ class AnswersController < ApplicationController
         files: answer_files,
         links: @answer.links
         )
+  end
+
+  def new_comment
+    @comment = Comment.new
   end
 end

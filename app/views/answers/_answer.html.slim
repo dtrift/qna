@@ -16,7 +16,7 @@ li class="answer-#{answer.id}"
 
   - if current_user&.author?(answer.question) && !answer.best?
     = button_to 'Best answer', best_answer_path(answer),
-                               method: :post, remote: true
+                               method: :patch, remote: true
 
   - if current_user&.author?(answer)
     '

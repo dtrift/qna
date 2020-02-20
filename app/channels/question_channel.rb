@@ -3,7 +3,5 @@ class QuestionChannel < ApplicationCable::Channel
     stream_from 'question_channel'
   end
 
-  def unsubscribed
-    # Any cleanup needed when channel is unsubscribed
-  end
+  def unsubscribed; end
 end

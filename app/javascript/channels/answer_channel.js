@@ -6,9 +6,7 @@ consumer.subscriptions.create("AnswerChannel", {
     this.perform('follow', { question_id: questionId });
   },
 
-  disconnected() {
-
-   },
+  disconnected() {},
 
   received(data) {
     console.log('Received data ->', data);

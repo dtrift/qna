@@ -2,19 +2,22 @@ import consumer from "./consumer"
 
 consumer.subscriptions.create("CommentChannel", {
   connected() {
+    var answerId = $('.answer').data('answer-id');
     var questionId = $('.question').data('question-id');
-    this.perform('follow', { question_id: questionId });
-  },
 
-  disconnected() {
-    return this.perform('unfollow');
+    this.perform('follow', {
+       answer_id: answerId,
+       question_id: questionId
+    });
   },
 
   received(data) {
-    var resource = $('.question-comments');
+    var type = data['resource'];
+    var resource = $('.' + type + '-' + 'comments');
 
-    if ((resource) && (data['comment']['user_id'] != gon.current_user)) {
+    if (data['comment']['user_id'] !== gon.current_user) {
       var comment = renderComment(data['comment'], data['user_email']);
+
       resource.append(comment);
     };
   }
@@ -22,7 +25,7 @@ consumer.subscriptions.create("CommentChannel", {
 
 function renderComment(comment, user_email) {
   var sections = `
-  <div class="comment" data-id="${comment['id']}">
+  <div class="comment">
     <p>${comment['content']}</p> 
     <p>Author: ${user_email}</p>
   `;

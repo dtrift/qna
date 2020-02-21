@@ -6,14 +6,10 @@ consumer.subscriptions.create("AnswerChannel", {
     this.perform('follow', { question_id: questionId });
   },
 
-  disconnected() {
-    return this.perform('unfollow');
-  },
-
   received(data) {
     var answers = $('.answers');
 
-    if ((answers) && (data['answer']['user_id'] != gon.current_user)) {
+    if (data['answer']['user_id'] !== gon.current_user) {
       var answer = renderAnswer(data['answer'], data['question_author']);
       var li = document.createElement('li');
       li.classList.add('answer-' + data['answer']['id']);
@@ -36,6 +32,7 @@ function renderAnswer(answer, question_author) {
       <a data-type="json" data-remote="true" rel="nofollow" data-method="post" href="/answers/${answer['id']}/positive">Positive</a>
       <a>|</a>
       <a data-type="json" data-remote="true" rel="nofollow" data-method="post" href="/answers/${answer['id']}/negative">Negative</a>
+      <br>
     `;
 
     sections += votes;

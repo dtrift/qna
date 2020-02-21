@@ -8,6 +8,7 @@ class CommentsController < ApplicationController
     @comment.user = current_user
 
     if @comment.save
+      
       flash.now[:notice] = 'Comment posted successfully'
     end
   end
@@ -26,15 +27,17 @@ class CommentsController < ApplicationController
   def publish_comment
     return if @comment.errors.present?
 
-    question_id = @klass == Question ? @resource.id : @resource.question.id
+    ActionCable.server.broadcast("#{@resource.class.name.downcase}-#{@resource.id}-comments", json_data)
+  end
 
-    ActionCable.server.broadcast(
-      "question-#{question_id}-comments",
-        comment: @comment,
-        resource_id: @comment.commentable_id,
-        resource_type: @comment.commentable_type,
-        user_email: @comment.user.email,
-        id: @resource.id
-        )
+  def json_data
+    { 
+      comment: @comment,
+      resource: @resource.class.name.downcase,
+      resource_id: @comment.commentable_id,
+      resource_type: @comment.commentable_type,
+      user_email: @comment.user.email,
+      content: @comment.content
+    }
   end
 end

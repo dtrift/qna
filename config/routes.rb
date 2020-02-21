@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   end
 
   concern :commentable do
-    resources :comments, shallow: true
+    resources :comments
   end
 
   resources :questions, concerns: %i[votable commentable] do

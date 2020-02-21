@@ -9,7 +9,7 @@ consumer.subscriptions.create("AnswerChannel", {
   received(data) {
     var answers = $('.answers');
 
-    if (data['answer']['user_id'] !== gon.current_user) {
+    if (data['answer']['user_id'] !== gon.user_id) {
       var answer = renderAnswer(data['answer'], data['question_author']);
       var li = document.createElement('li');
       li.classList.add('answer-' + data['answer']['id']);

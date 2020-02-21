@@ -15,7 +15,7 @@ consumer.subscriptions.create("CommentChannel", {
     var type = data['resource'];
     var resource = $('.' + type + '-' + 'comments');
 
-    if (data['comment']['user_id'] !== gon.current_user) {
+    if (data['comment']['user_id'] !== gon.user_id) {
       var comment = renderComment(data['comment'], data['user_email']);
 
       resource.append(comment);

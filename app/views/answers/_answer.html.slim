@@ -15,9 +15,10 @@
       .files
         = render partial: 'attachments/attachment', locals: { resource: answer }
 
-    - if current_user&.author?(answer.question) && !answer.best?
-      = button_to 'Best answer', best_answer_path(answer),
-                                 method: :patch, remote: true
+    p
+      - if current_user&.author?(answer.question) && !answer.best?
+        = button_to 'Best answer', best_answer_path(answer),
+                                   method: :patch, remote: true
 
     - if current_user&.author?(answer)
       '

@@ -8,7 +8,6 @@ class CommentsController < ApplicationController
     @comment.user = current_user
 
     if @comment.save
-      
       flash.now[:notice] = 'Comment posted successfully'
     end
   end

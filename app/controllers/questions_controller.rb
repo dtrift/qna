@@ -4,6 +4,8 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :find_question, only: %i[show update destroy]
 
+  after_action :publish_question, only: %i[create]
+
   def index
     @questions = Question.all
   end
@@ -11,6 +13,7 @@ class QuestionsController < ApplicationController
   def show
     @answer = Answer.new
     @answer.links.build
+    @comment = Comment.new
   end
 
   def new
@@ -50,11 +53,24 @@ class QuestionsController < ApplicationController
 
   def find_question
     @question = Question.with_attached_files.find(params[:id])
+    gon.question_id = @question.id
   end
 
   def question_params
     params.require(:question).permit(:title, :body, files: [],
                                      links_attributes: [:id, :name, :url, :_destroy],
                                      badge_attributes: [:name, :image])
+  end
+
+  def publish_question
+    return if @question.errors.present?
+
+    ActionCable.server.broadcast(
+      'question_channel',
+      ApplicationController.render(
+        partial: 'questions/question', 
+        locals: { question: @question }
+        )
+      )
   end
 end

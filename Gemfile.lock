@@ -189,6 +189,7 @@ GEM
     nio4r (2.5.2)
     nokogiri (1.10.8)
       mini_portile2 (~> 2.4.0)
+    oauth (0.5.4)
     oauth2 (1.4.4)
       faraday (>= 0.8, < 2.0)
       jwt (>= 1.0, < 3.0)
@@ -204,9 +205,17 @@ GEM
     omniauth-github (1.4.0)
       omniauth (~> 1.5)
       omniauth-oauth2 (>= 1.4.0, < 2.0)
+    omniauth-oauth (1.1.0)
+      oauth
+      omniauth (~> 1.0)
     omniauth-oauth2 (1.6.0)
       oauth2 (~> 1.1)
       omniauth (~> 1.9)
+    omniauth-twitter (1.4.0)
+      omniauth-oauth (~> 1.1)
+      rack
+    omniauth-vkontakte (1.5.1)
+      omniauth-oauth2 (>= 1.5, <= 1.6)
     orm_adapter (0.5.0)
     pg (1.2.2)
     public_suffix (4.0.3)
@@ -344,6 +353,8 @@ DEPENDENCIES
   octokit (~> 4.0)
   omniauth
   omniauth-github
+  omniauth-twitter
+  omniauth-vkontakte
   pg (>= 0.18, < 2.0)
   puma (~> 4.1)
   rails (~> 6.0.2, >= 6.0.2.1)

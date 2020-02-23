@@ -21,7 +21,7 @@ feature 'Set a best answers', %q{
     scenario 'set the best answer' do
       within ".answer-#{answer.id}" do
         click_on 'Best answer'
-
+        
         expect(page).to_not have_link 'Best answer'
       end
     end

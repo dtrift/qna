@@ -11,9 +11,10 @@ feature 'User can register', %q{
     fill_in 'Email', with: 'test@user.com'
     fill_in 'Password', with: 'testpass'
     fill_in 'Password confirmation', with: 'testpass'
+
     click_on 'Sign up'
 
-    expect(page).to have_content 'Welcome! You have signed up successfully.'
+    expect(page).to have_content 'A message with a confirmation link has been sent to your email address. Please follow the link to activate your account.'
   end
 
   scenario 'New registration with blank Email' do

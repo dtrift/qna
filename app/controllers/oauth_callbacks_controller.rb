@@ -8,18 +8,26 @@ class OauthCallbacksController < Devise::OmniauthCallbacksController
     oauth_authentication
   end
 
-  # def twitter
-  #   oauth_authentication
-  # end
+  def twitter
+    oauth_authentication
+  end
 
   private
 
-  def oauth_authentication
-    @user = User.find_for_oauth(request.env['omniauth.auth'])
+  def auth
+    request.env['omniauth.auth']
+  end
 
-    if @user&.persisted?
-      sign_in_and_redirect @user, event: :authentication
+  def oauth_authentication
+    user = User.find_for_oauth(auth)
+
+    if user&.confirmed?
+      sign_in_and_redirect user, event: :authentication
       set_flash_message_for_action
+    elsif user
+      session[:provider] = auth.provider
+      session[:uid] = auth.uid
+      redirect_to new_user_confirmation_path
     else
       redirect_to root_path, alert: 'Something went wrong'
     end

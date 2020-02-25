@@ -6,7 +6,7 @@ class FindForOauthService
   end
 
   def call
-    authorization = Authorization.find_by(provider: auth.provider, uid: auth.uid.to_s)
+    authorization = Authorization.find_by(provider: auth.provider, uid: auth.uid)
     return authorization.user if authorization
 
     email = auth.info[:email]
@@ -21,7 +21,7 @@ class FindForOauthService
       user.transaction do
         user.skip_confirmation!
         user.save!
-        user.authorizations.create!(provider: auth.provider, uid: auth.uid.to_s)
+        user.authorizations.create!(provider: auth.provider, uid: auth.uid)
       end
     else
       user = User.new

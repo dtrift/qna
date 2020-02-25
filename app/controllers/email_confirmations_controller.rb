@@ -17,11 +17,11 @@ class EmailConfirmationsController < Devise::ConfirmationsController
   private
 
   def after_confirmation_path_for(resource, user)
-    user.authorizations.create(
+    user.authorizations.create!(
       provider: session[:provider],
       uid: session[:uid]
     )
-    
+
     sign_in(user)
     root_path
   end

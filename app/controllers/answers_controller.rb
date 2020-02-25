@@ -4,7 +4,7 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!, only: %i[create destroy]
   before_action :find_question, only: %i[new create]
   before_action :find_answer, only: %i[update destroy best]
-  before_action :new_comment, only: %i[create update best]
+  before_action :init_new_comment, only: %i[create update best]
 
   after_action :publish_answer, only: %i[create]
   
@@ -81,7 +81,7 @@ class AnswersController < ApplicationController
         )
   end
 
-  def new_comment
+  def init_new_comment
     @comment = Comment.new
   end
 end

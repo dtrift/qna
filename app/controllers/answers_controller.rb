@@ -4,12 +4,13 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!, only: %i[create destroy]
   before_action :find_question, only: %i[new create]
   before_action :find_answer, only: %i[update destroy best]
+  before_action :init_new_comment, only: %i[create update best]
+
   after_action :publish_answer, only: %i[create]
   
   def create
     @answer = @question.answers.build(answer_params.merge(question: @question))
     @answer.user = current_user
-    @comment = Comment.new
 
     if @answer.save
       flash.now[:notice] = 'Answer successfully added'
@@ -28,6 +29,7 @@ class AnswersController < ApplicationController
   def destroy
     if current_user.author?(@answer)
       @answer.destroy
+      
       flash.now[:notice] = 'Answer successfully deleted'
     else
       render 'questions/show'
@@ -77,5 +79,9 @@ class AnswersController < ApplicationController
         files: answer_files,
         links: @answer.links
         )
+  end
+
+  def init_new_comment
+    @comment = Comment.new
   end
 end

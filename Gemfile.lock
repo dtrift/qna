@@ -134,6 +134,8 @@ GEM
       capybara (>= 2.4, < 4.0)
       mail
     childprocess (3.0.0)
+    cleanup (0.1.2)
+      bundler (~> 1.12)
     cocoon (1.2.14)
     concurrent-ruby (1.1.6)
     crass (1.0.6)
@@ -349,6 +351,7 @@ DEPENDENCIES
   byebug
   capybara (>= 2.15)
   capybara-email
+  cleanup
   cocoon
   devise
   factory_bot_rails

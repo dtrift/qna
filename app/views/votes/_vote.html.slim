@@ -2,18 +2,15 @@ div class = "rate #{resource.class}-#{resource.id}"
   .rating
     = "Rating: #{resource.rating}"
 
-  - if user_signed_in? && can?(:revote, resource)
+  - if user_signed_in? && !can?(:update, resource)
     .voting class = "#{'hidden' if current_user&.voted?(resource)}"
-      - if can?(:positive, resource)
-        = link_to 'Positive', polymorphic_path(resource, action: :positive),
-                              method: :post, remote: true, data: { type: :json }
-        '  |
-      - if can?(:negative, resource)
-        = link_to 'Negative', polymorphic_path(resource, action: :negative),
-                              method: :post, remote: true, data: { type: :json }
+      = link_to 'Positive', polymorphic_path(resource, action: :positive),
+                            method: :post, remote: true, data: { type: :json }
+      '  |
+      = link_to 'Negative', polymorphic_path(resource, action: :negative),
+                            method: :post, remote: true, data: { type: :json }
 
     .revote
-      - if can?(:revote, resource)
-        = link_to 'Revote', polymorphic_path(resource, action: :revote),
-            class: "revote-link #{'hidden' unless current_user&.voted?(resource)}",
-            method: :delete, remote: true, data: { type: :json }
+      = link_to 'Revote', polymorphic_path(resource, action: :revote),
+          class: "revote-link #{'hidden' unless current_user&.voted?(resource)}",
+          method: :delete, remote: true, data: { type: :json }

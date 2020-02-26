@@ -2,12 +2,6 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.3'
-# Github API
-gem 'octokit', '~> 4.0'
-# Cocoon for nested forms
-gem 'cocoon'
-# AWS S3 
-gem 'aws-sdk-s3', '~> 1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.2', '>= 6.0.2.1'
 # Use postgresql as the database for Active Record
@@ -40,14 +34,22 @@ gem 'gon'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
+# Github API
+gem 'octokit', '~> 4.0'
+# Cocoon for nested forms
+gem 'cocoon'
+# AWS S3 
+gem 'aws-sdk-s3', '~> 1'
+
 gem 'devise'
 # OAuth 
 gem 'omniauth'
 gem 'omniauth-github'
 gem 'omniauth-twitter'
 gem 'omniauth-vkontakte'
-
 gem 'cleanup'
+
+gem 'cancancan'
 
 
 group :development, :test do

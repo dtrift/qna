@@ -9,7 +9,7 @@
       = render @question.answers
 
   br
-  - if user_signed_in?
+  - if user_signed_in? && can?(:create, Answer)
     h3 Add Answer
 
     .answer-errors

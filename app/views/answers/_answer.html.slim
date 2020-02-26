@@ -16,11 +16,11 @@
         = render partial: 'attachments/attachment', locals: { resource: answer }
 
     p
-      - if current_user&.author?(answer.question) && !answer.best?
+      - if can?(:best, answer) && !answer.best?
         = button_to 'Best answer', best_answer_path(answer),
                                    method: :patch, remote: true
 
-    - if current_user&.author?(answer)
+    - if  can?(:update, answer)
       '
       = link_to 'Edit', '#', class: 'edit-answer-link',
                         data: { answer_id: answer.id }

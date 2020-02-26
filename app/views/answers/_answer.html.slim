@@ -2,18 +2,19 @@
   .resource data-resource_type="answer" data-resource_id="#{answer.id}"
     p
       = answer.body
+    p Author: #{answer.user.email}
 
-      .answer-comments
-        = render partial: 'comments/list', locals: { resource: answer }
+    .answer-comments
+      = render partial: 'comments/list', locals: { resource: answer }
 
-      .vote
-        = render partial: 'votes/vote', locals: { resource: answer }
+    .vote
+      = render partial: 'votes/vote', locals: { resource: answer }
 
-      .links
-        = render partial: 'links/list', locals: { resource: answer }
+    .links
+      = render partial: 'links/list', locals: { resource: answer }
 
-      .files
-        = render partial: 'attachments/attachment', locals: { resource: answer }
+    .files
+      = render partial: 'attachments/attachment', locals: { resource: answer }
 
     p
       - if can?(:best, answer) && !answer.best?

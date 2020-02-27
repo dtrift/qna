@@ -7,6 +7,8 @@ class AnswersController < ApplicationController
   before_action :init_new_comment, only: %i[create update best]
 
   after_action :publish_answer, only: %i[create]
+
+  authorize_resource
   
   def create
     @answer = @question.answers.build(answer_params.merge(question: @question))

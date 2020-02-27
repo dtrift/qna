@@ -34,7 +34,7 @@ class Ability
     end
 
     can :revote, [Question, Answer] do |resource|
-      resource.votes.where(user_id: user.id).exists?
+      resource.votes.exists?(user_id: user.id)
     end
     
     can :best, Answer, question: { user_id: user.id }

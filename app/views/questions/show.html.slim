@@ -1,7 +1,6 @@
 .container.col-md-12  
-  .question data-question-id="#{@question.id}"
-    .resource data-resource_type="question" data-resource_id="#{@question.id}"
-      = render 'section_question'
+  .question.resource data-question-id="#{@question.id}" data-resource_type="question"
+    = render 'section_question'
 
   .answers
     - if @question.answers.present?

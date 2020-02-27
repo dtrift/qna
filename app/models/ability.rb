@@ -29,15 +29,12 @@ class Ability
     can :update, [Question, Answer], user_id: user.id
     can :destroy, [Question, Answer], user_id: user.id
 
-    # can :positive, [Question, Answer], voteable: { user_id: !user.id }
-    # can :negative, [Question, Answer], voteable: { user_id: !user.id }
-    # can :revote, [Question, Answer], voteable: { user_id: !user.id }
     can [:positive, :negative], [Question, Answer] do |resource|
       !user.author? resource
     end
 
     can :revote, [Question, Answer] do |resource|
-      resource.votes.find_by(user_id: user.id)
+      resource.votes.where(user_id: user.id).exists?
     end
     
     can :best, Answer, question: { user_id: user.id }

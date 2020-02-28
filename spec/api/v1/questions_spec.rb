@@ -15,10 +15,10 @@ describe 'Questions API', type: :request do
     context 'authorized' do
       let(:access_token) { create :access_token }
       let(:user) { create :user }
-      let!(:questions) { create_list(:question, 2, user: user) }
+      let!(:questions) { create_list :question, 2, user: user }
       let(:question) { questions.first }
       let(:question_response) { json['questions'].first }
-      let!(:answers) { create_list(:answer, 3, user: user, question: question) } 
+      let!(:answers) { create_list :answer, 3, user: user, question: question }
 
       before { get api_path, params: { access_token: access_token.token }, headers: headers }
 

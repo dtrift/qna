@@ -24,7 +24,7 @@ describe 'Profiles API', type: :request do
 
       it 'returns all public fields' do
         %w[id email admin created_at updated_at].each do |attr|
-          expect(json[attr]).to eq me.send(attr).as_json
+          expect(json['user'][attr]).to eq me.send(attr).as_json
         end
       end
 
@@ -33,6 +33,32 @@ describe 'Profiles API', type: :request do
           expect(json).to_not have_key(attr)
         end
       end
+    end
+  end
+
+  describe 'GET /api/v1/profiles' do
+    let(:method) { :get }
+    let(:api_path) { '/api/v1/profiles' }
+
+    it_behaves_like 'API Authorizable'
+
+    context 'authorized' do
+      let(:me) { users.first }
+      let(:access_token) { create(:access_token, resource_owner_id: me.id) }
+      let!(:users) { create_list :user, 3 }
+
+      before { get api_path, params: { access_token: access_token.token }, headers: headers }
+
+      it 'returns status 200' do
+        expect(response).to be_successful
+      end
+
+      it 'returns all users without me' do
+        expect(json['users'].size).to eq 2
+      end
+
+      it 'returns all public fields'
+      it 'dosn\'t return private fields'
     end
   end
 end

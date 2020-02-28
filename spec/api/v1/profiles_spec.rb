@@ -44,8 +44,10 @@ describe 'Profiles API', type: :request do
 
     context 'authorized' do
       let(:me) { users.first }
+      let(:user) { users.last }
       let(:access_token) { create(:access_token, resource_owner_id: me.id) }
       let!(:users) { create_list :user, 3 }
+      let(:users_response) { json['users'] }
 
       before { get api_path, params: { access_token: access_token.token }, headers: headers }
 
@@ -54,11 +56,20 @@ describe 'Profiles API', type: :request do
       end
 
       it 'returns all users without me' do
-        expect(json['users'].size).to eq 2
+        expect(users_response.size).to eq 2
       end
 
-      it 'returns all public fields'
-      it 'dosn\'t return private fields'
+      it 'returns all public fields' do
+        %w[id email admin created_at updated_at].each do |attr|
+          expect(users_response.last[attr]).to eq user.send(attr).as_json
+        end
+      end
+
+      it 'dosn\'t return private fields' do
+        %w[password encrypted_password].each do |attr|
+          expect(users_response.last).to_not have_key(attr)
+        end
+      end
     end
   end
 end

@@ -1,6 +1,6 @@
 class Api::V1::AnswersController < Api::V1::BaseController
   before_action :find_question, only: %i[index show create]
-  before_action :find_answer, only: %i[show update]
+  before_action :find_answer, only: %i[show update destroy]
 
   def index
     @answers = @question.answers
@@ -25,6 +25,14 @@ class Api::V1::AnswersController < Api::V1::BaseController
   def update
     if @answer.update(answer_params)
       render json: @answer, status: 201
+    else
+      render json: { errors: @answer.errors }, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    if @answer.destroy
+      render json: {}, status: 200
     else
       render json: { errors: @answer.errors }, status: :unprocessable_entity
     end

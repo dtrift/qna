@@ -156,14 +156,13 @@ describe 'Answers API', type: :request do
       it 'saves answer in database with new params' do
         answer_request
         expect(Answer.first.body).to eq 'New Title for Answer'
-        # expect { answer_request }.to change(Answer, :count).by(1)
       end
 
       it 'returns all public fields' do
         answer_request
 
         %w[id body created_at updated_at user].each do |attr|
-          expect(answer_response[attr]).to eq Answer.last.send(attr).as_json
+          expect(answer_response[attr]).to eq Answer.first.send(attr).as_json
         end
       end
     end

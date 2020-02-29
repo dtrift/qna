@@ -70,7 +70,14 @@ describe 'Questions API', type: :request do
       let(:access_token) { create :access_token }
       let(:question) { { title: 'Test Title', body: 'Test Body' } }
       let(:question_response) { json['question'] }
-      before { post api_path, params: { access_token: access_token.token, question: question }, headers: headers }
+
+      before do 
+        post api_path, headers: headers,
+        params: { 
+          access_token: access_token.token,
+          question: question
+        }
+      end
 
       it 'returns status 201' do
         expect(response.status).to eq 201
@@ -81,10 +88,47 @@ describe 'Questions API', type: :request do
       end
 
       it 'returns all public fields' do
-        %w[id title body created_at updated_at].each do |attr|
+        %w[id title body created_at updated_at user].each do |attr|
           expect(question_response[attr]).to eq Question.first.send(attr).as_json
         end
       end
     end
-  end  
+  end
+
+  describe 'PATCH /api/v1/questions/:id' do
+    let(:method) { :patch }
+    let(:api_path) { "/api/v1/questions/#{question.id}" }
+    let(:user) { create :user }
+    let!(:question) { create :question, user: user }
+
+    it_behaves_like 'API Authorizable'
+
+    context 'authorized' do
+      let(:access_token) { create :access_token }
+      let(:new_params_for_question) { { title: 'New Title', body: 'New Body' } }
+      let(:question_response) { json['question'] }
+
+      before do
+        patch api_path, headers: headers, 
+        params: { 
+          access_token: access_token.token,
+          question: new_params_for_question
+        }
+      end
+
+      it 'returns status 201' do
+        expect(response.status).to eq 201
+      end
+
+      it 'saves question in database' do
+        expect(Question.count).to eq 1
+      end
+
+      it 'returns all public fields' do
+        %w[id title body created_at updated_at user].each do |attr|
+          expect(question_response[attr]).to eq Question.first.send(attr).as_json
+        end
+      end
+    end
+  end
 end

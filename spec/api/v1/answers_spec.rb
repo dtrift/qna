@@ -130,7 +130,7 @@ describe 'Answers API', type: :request do
     end
   end
 
-  describe 'PATCH /api/v1/:question_id/answers/:id' do
+  describe 'PATCH /api/v1/answers/:id' do
     let(:method) { :patch }
     let(:api_path) { "/api/v1/answers/#{answer.id}" }
 
@@ -164,6 +164,33 @@ describe 'Answers API', type: :request do
         %w[id body created_at updated_at user].each do |attr|
           expect(answer_response[attr]).to eq Answer.first.send(attr).as_json
         end
+      end
+    end
+  end
+
+  describe 'DELETE /api/v1/answers/:id' do
+    let(:method) { :delete }
+    let(:api_path) { "/api/v1/answers/#{answer.id}" }
+
+    it_behaves_like 'API Authorizable'
+
+    context 'authorized' do
+      let(:access_token) { create :access_token }
+
+      let(:answer_request) {
+        delete api_path, params: {
+          access_token: access_token.token,
+          answer_id: answer.id,
+        }, headers: headers 
+      }
+
+      it 'returns status 200' do
+        answer_request
+        expect(response.status).to eq 200
+      end
+
+      it 'deletes the answer from database' do
+        expect { answer_request }.to change(Answer, :count).by(-1)
       end
     end
   end

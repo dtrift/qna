@@ -2,7 +2,6 @@ require 'rails_helper'
 
 describe 'Answers API', type: :request do
   let(:headers) { {
-    "CONTENT_TYPE" => "application/json",
     "ACCEPT" => "application/json"
   } }
 
@@ -40,9 +39,9 @@ describe 'Answers API', type: :request do
     end
   end
 
-  describe 'GET /api/v1/questions/:question_id/answers/:id' do
+  describe 'GET /api/v1/answers/:id' do
     let(:method) { :get }
-    let(:api_path) { "/api/v1/questions/#{question.id}/answers/#{answer.id}" }
+    let(:api_path) { "/api/v1/answers/#{answer.id}" }
 
     it_behaves_like 'API Authorizable'
 
@@ -53,7 +52,14 @@ describe 'Answers API', type: :request do
       let(:comment_response) { answer_response['comments'].first }
       let!(:links) { create_list :link, 4, linkable: answer }
 
-      before { get api_path, params: { access_token: access_token.token }, headers: headers }
+      let(:answer_request) {
+        get api_path, params: {
+          access_token: access_token.token,
+          question_id: question.id
+        }, headers: headers 
+      }
+
+      before { answer_request }
 
       it 'returns status 200' do
         expect(response).to be_successful
@@ -83,6 +89,43 @@ describe 'Answers API', type: :request do
 
       it 'returns files' do
         expect(answer_response['files'].first.size).to eq 1 
+      end
+    end
+  end
+
+  describe 'POST /api/v1/questions/:question_id/answers/' do
+    let(:method) { :post }
+    let(:api_path) { "/api/v1/questions/#{question.id}/answers" }
+
+    it_behaves_like 'API Authorizable'
+
+    context 'authorized' do
+      let(:access_token) { create :access_token }
+      let(:answer) { { body: 'Test Title for Answer' } }
+      let(:answer_response) { json['answer'] }
+
+      let(:answer_request) {
+        post api_path, params: {
+          access_token: access_token.token,
+          question_id: question.id,
+          answer: answer,
+        }, headers: headers 
+      }
+
+      it 'returns status 201' do
+        answer_request
+        expect(response.status).to eq 201
+      end
+
+      it 'saves question in database' do
+        expect { answer_request }.to change(Answer, :count).by(1)
+      end
+
+      it 'returns all public fields' do
+        answer_request
+        %w[id body created_at updated_at user].each do |attr|
+          expect(answer_response[attr]).to eq Answer.last.send(attr).as_json
+        end
       end
     end
   end

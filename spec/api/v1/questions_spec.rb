@@ -71,23 +71,25 @@ describe 'Questions API', type: :request do
       let(:question) { { title: 'Test Title', body: 'Test Body' } }
       let(:question_response) { json['question'] }
 
-      before do 
-        post api_path, headers: headers,
-        params: { 
+      let(:question_request) {
+        post api_path, params: { 
           access_token: access_token.token,
           question: question
-        }
-      end
+        }, headers: headers 
+      }
 
       it 'returns status 201' do
+        question_request
         expect(response.status).to eq 201
       end
 
       it 'saves question in database' do
-        expect(Question.count).to eq 1
+        expect { question_request }.to change(Question, :count).by(1)
       end
 
       it 'returns all public fields' do
+        question_request
+
         %w[id title body created_at updated_at user].each do |attr|
           expect(question_response[attr]).to eq Question.first.send(attr).as_json
         end
@@ -108,23 +110,25 @@ describe 'Questions API', type: :request do
       let(:new_params_for_question) { { title: 'New Title', body: 'New Body' } }
       let(:question_response) { json['question'] }
 
-      before do
-        patch api_path, headers: headers, 
-        params: { 
+      let(:question_request) {
+        patch api_path, params: { 
           access_token: access_token.token,
           question: new_params_for_question
-        }
-      end
+        }, headers: headers 
+      }
 
       it 'returns status 201' do
+        question_request
         expect(response.status).to eq 201
       end
 
-      it 'saves question in database' do
-        expect(Question.count).to eq 1
+      it 'saves question in database with new params' do
+        question_request
+        expect(Question.last.body).to eq 'New Body'
       end
 
       it 'returns all public fields' do
+        question_request
         %w[id title body created_at updated_at user].each do |attr|
           expect(question_response[attr]).to eq Question.first.send(attr).as_json
         end
@@ -144,20 +148,21 @@ describe 'Questions API', type: :request do
       let(:access_token) { create :access_token }
       let(:question_response) { json['question'] }
 
-      before do
-        delete api_path, headers: headers, 
+      let(:question_request) {
+        delete api_path,
         params: { 
           access_token: access_token.token,
           question_id: question.id
-        }
-      end
+        }, headers: headers 
+      }
 
       it 'returns status 200' do
+        question_request
         expect(response.status).to eq 200
       end
 
       it 'deletes the question from database' do
-        expect(Question.count).to eq 0
+        expect { question_request }.to change(Question, :count).by(-1)
       end
     end
   end

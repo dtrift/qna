@@ -129,4 +129,43 @@ describe 'Answers API', type: :request do
       end
     end
   end
+
+  describe 'PATCH /api/v1/:question_id/answers/:id' do
+    let(:method) { :patch }
+    let(:api_path) { "/api/v1/answers/#{answer.id}" }
+
+    it_behaves_like 'API Authorizable'
+
+    context 'authorized' do
+      let(:access_token) { create :access_token }
+      let(:new_params_for_answer) { { body: 'New Title for Answer' } }
+      let(:answer_response) { json['answer'] }
+
+      let(:answer_request) {
+        patch api_path, params: {
+          access_token: access_token.token,
+          answer: new_params_for_answer,
+        }, headers: headers 
+      }
+
+      it 'returns status 201' do
+        answer_request
+        expect(response.status).to eq 201
+      end
+
+      it 'saves answer in database with new params' do
+        answer_request
+        expect(Answer.first.body).to eq 'New Title for Answer'
+        # expect { answer_request }.to change(Answer, :count).by(1)
+      end
+
+      it 'returns all public fields' do
+        answer_request
+
+        %w[id body created_at updated_at user].each do |attr|
+          expect(answer_response[attr]).to eq Answer.last.send(attr).as_json
+        end
+      end
+    end
+  end
 end

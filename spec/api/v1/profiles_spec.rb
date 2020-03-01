@@ -18,20 +18,17 @@ describe 'Profiles API', type: :request do
 
       before { get api_path, params: { access_token: access_token.token }, headers: headers }
 
-      it 'returns status 200' do
-        expect(response).to be_successful
+      it_behaves_like 'Status OK'
+
+      it_behaves_like 'Public fields returnable' do
+        let(:fields) { %w[id email admin created_at updated_at] }
+        let(:resource_response) { json['user'] }
+        let(:resource) { me }
       end
 
-      it 'returns all public fields' do
-        %w[id email admin created_at updated_at].each do |attr|
-          expect(json['user'][attr]).to eq me.send(attr).as_json
-        end
-      end
-
-      it 'dosn\'t return private fields' do
-        %w[password encrypted_password].each do |attr|
-          expect(json).to_not have_key(attr)
-        end
+      it_behaves_like 'Private fields not returnable' do
+        let(:fields) { %w[password encrypted_password] }
+        let(:resource_response) { json }
       end
     end
   end
@@ -51,24 +48,21 @@ describe 'Profiles API', type: :request do
 
       before { get api_path, params: { access_token: access_token.token }, headers: headers }
 
-      it 'returns status 200' do
-        expect(response).to be_successful
+      it_behaves_like 'Status OK'
+
+      it_behaves_like 'Public fields returnable' do
+        let(:fields) { %w[id email admin created_at updated_at] }
+        let(:resource_response) { users_response.last }
+        let(:resource) { user }
+      end
+
+      it_behaves_like 'Private fields not returnable' do
+        let(:fields) { %w[password encrypted_password] }
+        let(:resource_response) { users_response.last }
       end
 
       it 'returns all users without me' do
         expect(users_response.size).to eq 2
-      end
-
-      it 'returns all public fields' do
-        %w[id email admin created_at updated_at].each do |attr|
-          expect(users_response.last[attr]).to eq user.send(attr).as_json
-        end
-      end
-
-      it 'dosn\'t return private fields' do
-        %w[password encrypted_password].each do |attr|
-          expect(users_response.last).to_not have_key(attr)
-        end
       end
     end
   end

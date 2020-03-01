@@ -20,18 +20,16 @@ describe 'Answers API', type: :request do
 
       before { get api_path, params: { access_token: access_token.token }, headers: headers }
 
-      it 'returns status 200' do
-        expect(response).to be_successful
+      it_behaves_like 'Status OK'
+
+      it_behaves_like 'Public fields returnable' do
+        let(:fields) { %w[id body created_at updated_at user_id] }
+        let(:resource_response) { answer_response }
+        let(:resource) { answer }
       end
 
       it 'returns list of answers' do
         expect(answers_response.size).to eq 3
-      end
-
-      it 'returns all public fields' do
-        %w[id body created_at updated_at user_id].each do |attr|
-          expect(answer_response[attr]).to eq answer.send(attr).as_json
-        end
       end
     end
   end
@@ -58,14 +56,12 @@ describe 'Answers API', type: :request do
 
       before { answer_request }
 
-      it 'returns status 200' do
-        expect(response).to be_successful
-      end
+      it_behaves_like 'Status OK'
 
-      it 'returns all public fields' do
-        %w[id body created_at updated_at user_id].each do |attr|
-          expect(answer_response[attr]).to eq answer.send(attr).as_json
-        end
+      it_behaves_like 'Public fields returnable' do
+        let(:fields) { %w[id body created_at updated_at user_id] }
+        let(:resource_response) { answer_response }
+        let(:resource) { answer }
       end
 
       context 'comments' do
@@ -73,10 +69,10 @@ describe 'Answers API', type: :request do
           expect(answer_response['comments'].size).to eq 3
         end
 
-        it 'returns all public fields' do
-          %w[id content created_at updated_at user_id].each do |attr|
-            expect(comment_response[attr]).to eq comment.send(attr).as_json
-          end
+        it_behaves_like 'Public fields returnable' do
+          let(:fields) { %w[id content created_at updated_at user_id] }
+          let(:resource_response) { comment_response }
+          let(:resource) { comment }
         end
       end
 
@@ -109,20 +105,19 @@ describe 'Answers API', type: :request do
         }, headers: headers 
       }
 
-      it 'returns status 201' do
-        answer_request
-        expect(response.status).to eq 201
+      it_behaves_like 'Status OK' do
+        let(:request) { answer_request }
+      end
+
+      it_behaves_like 'Public fields returnable' do
+        let(:request) { answer_request }
+        let(:fields) { %w[id body created_at updated_at user] }
+        let(:resource_response) { answer_response }
+        let(:resource) { Answer.last }
       end
 
       it 'saves question in database' do
         expect { answer_request }.to change(Answer, :count).by(1)
-      end
-
-      it 'returns all public fields' do
-        answer_request
-        %w[id body created_at updated_at user].each do |attr|
-          expect(answer_response[attr]).to eq Answer.last.send(attr).as_json
-        end
       end
     end
   end
@@ -138,7 +133,7 @@ describe 'Answers API', type: :request do
         create :access_token,
         resource_owner_id: user.id
       }
-      
+
       let(:new_params_for_answer) { { body: 'New Title for Answer' } }
       let(:answer_response) { json['answer'] }
 
@@ -149,22 +144,20 @@ describe 'Answers API', type: :request do
         }, headers: headers 
       }
 
-      it 'returns status 201' do
-        answer_request
-        expect(response.status).to eq 201
+      it_behaves_like 'Status OK' do
+        let(:request) { answer_request }
+      end
+
+      it_behaves_like 'Public fields returnable' do
+        let(:request) { answer_request }
+        let(:fields) { %w[id body created_at updated_at user] }
+        let(:resource_response) { answer_response }
+        let(:resource) { Answer.first }
       end
 
       it 'saves answer in database with new params' do
         answer_request
         expect(Answer.first.body).to eq 'New Title for Answer'
-      end
-
-      it 'returns all public fields' do
-        answer_request
-
-        %w[id body created_at updated_at user].each do |attr|
-          expect(answer_response[attr]).to eq Answer.first.send(attr).as_json
-        end
       end
     end
   end
@@ -188,9 +181,8 @@ describe 'Answers API', type: :request do
         }, headers: headers 
       }
 
-      it 'returns status 200' do
-        answer_request
-        expect(response.status).to eq 200
+      it_behaves_like 'Status OK' do
+        let(:request) { answer_request }
       end
 
       it 'deletes the answer from database' do

@@ -19,18 +19,16 @@ describe 'Questions API', type: :request do
 
       before { get api_path, params: { access_token: access_token.token }, headers: headers }
 
-      it 'returns status 200' do
-        expect(response).to be_successful
+      it_behaves_like 'Status OK'
+
+      it_behaves_like 'Public fields returnable' do
+        let(:fields) { %w[id title body created_at updated_at] }
+        let(:resource_response) { question_response }
+        let(:resource) { question }
       end
 
       it 'returns list of questions' do
         expect(json['questions'].size).to eq 2
-      end
-
-      it 'returns all public fields' do
-        %w[id title body created_at updated_at].each do |attr|
-          expect(question_response[attr]).to eq question.send(attr).as_json
-        end
       end
 
       it 'contains user object' do
@@ -49,10 +47,10 @@ describe 'Questions API', type: :request do
           expect(question_response['answers'].size).to eq 3
         end
 
-        it 'returns all public fields' do
-          %w[id body user_id created_at updated_at].each do |attr|
-            expect(answer_response[attr]).to eq answer.send(attr).as_json
-          end
+        it_behaves_like 'Public fields returnable' do
+          let(:fields) {  %w[id body user_id created_at updated_at] }
+          let(:resource_response) { answer_response }
+          let(:resource) { answer }
         end
       end
     end
@@ -76,21 +74,19 @@ describe 'Questions API', type: :request do
         }, headers: headers 
       }
 
-      it 'returns status 201' do
-        question_request
-        expect(response.status).to eq 201
+      it_behaves_like 'Status OK' do
+        let(:request) { question_request }
+      end
+
+      it_behaves_like 'Public fields returnable' do
+        let(:request) { question_request }
+        let(:fields) {  %w[id title body created_at updated_at user] }
+        let(:resource_response) { question_response }
+        let(:resource) { Question.first }
       end
 
       it 'saves question in database' do
         expect { question_request }.to change(Question, :count).by(1)
-      end
-
-      it 'returns all public fields' do
-        question_request
-
-        %w[id title body created_at updated_at user].each do |attr|
-          expect(question_response[attr]).to eq Question.first.send(attr).as_json
-        end
       end
     end
   end
@@ -119,21 +115,20 @@ describe 'Questions API', type: :request do
         }, headers: headers 
       }
 
-      it 'returns status 201' do
-        question_request
-        expect(response.status).to eq 201
+      it_behaves_like 'Status OK' do
+        let(:request) { question_request }
+      end
+
+      it_behaves_like 'Public fields returnable' do
+        let(:request) { question_request }
+        let(:fields) {  %w[id title body created_at updated_at user] }
+        let(:resource_response) { question_response }
+        let(:resource) { Question.first }
       end
 
       it 'saves question in database with new params' do
         question_request
         expect(Question.last.body).to eq 'New Body'
-      end
-
-      it 'returns all public fields' do
-        question_request
-        %w[id title body created_at updated_at user].each do |attr|
-          expect(question_response[attr]).to eq Question.first.send(attr).as_json
-        end
       end
     end
   end
@@ -162,9 +157,8 @@ describe 'Questions API', type: :request do
         }, headers: headers 
       }
 
-      it 'returns status 200' do
-        question_request
-        expect(response.status).to eq 200
+      it_behaves_like 'Status OK' do
+        let(:request) { question_request }
       end
 
       it 'deletes the question from database' do

@@ -1,10 +1,7 @@
 require 'rails_helper'
 
 describe 'Answers API', type: :request do
-  let(:headers) { {
-    "ACCEPT" => "application/json"
-  } }
-
+  let(:headers) { { "ACCEPT" => "application/json" } }
   let(:access_token) { create :access_token }
   let(:user) { create :user }
   let(:question) { create :question, user: user }
@@ -137,7 +134,11 @@ describe 'Answers API', type: :request do
     it_behaves_like 'API Authorizable'
 
     context 'authorized' do
-      let(:access_token) { create :access_token }
+      let(:access_token) {
+        create :access_token,
+        resource_owner_id: user.id
+      }
+      
       let(:new_params_for_answer) { { body: 'New Title for Answer' } }
       let(:answer_response) { json['answer'] }
 
@@ -175,7 +176,10 @@ describe 'Answers API', type: :request do
     it_behaves_like 'API Authorizable'
 
     context 'authorized' do
-      let(:access_token) { create :access_token }
+      let(:access_token) {
+        create :access_token,
+        resource_owner_id: user.id
+      }
 
       let(:answer_request) {
         delete api_path, params: {

@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 describe 'Questions API', type: :request do
-  let(:headers) { {
-    "ACCEPT" => "application/json"
-  } }
+  let(:headers) { { "ACCEPT" => "application/json" } }
 
   describe 'GET /api/v1/questions' do
     let(:method) { :get }
@@ -106,7 +104,11 @@ describe 'Questions API', type: :request do
     it_behaves_like 'API Authorizable'
 
     context 'authorized' do
-      let(:access_token) { create :access_token }
+      let(:access_token) {
+        create :access_token,
+        resource_owner_id: user.id
+      }
+
       let(:new_params_for_question) { { title: 'New Title', body: 'New Body' } }
       let(:question_response) { json['question'] }
 
@@ -145,7 +147,11 @@ describe 'Questions API', type: :request do
     it_behaves_like 'API Authorizable'
 
     context 'authorized' do
-      let(:access_token) { create :access_token }
+      let(:access_token) {
+        create :access_token,
+        resource_owner_id: user.id
+      }
+
       let(:question_response) { json['question'] }
 
       let(:question_request) {

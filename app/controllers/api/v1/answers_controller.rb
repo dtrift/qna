@@ -2,6 +2,8 @@ class Api::V1::AnswersController < Api::V1::BaseController
   before_action :find_question, only: %i[index show create]
   before_action :find_answer, only: %i[show update destroy]
 
+  authorize_resource
+
   def index
     @answers = @question.answers
     render json: @answers

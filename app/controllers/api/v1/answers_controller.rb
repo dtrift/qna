@@ -18,7 +18,7 @@ class Api::V1::AnswersController < Api::V1::BaseController
     @answer.user = current_resource_owner
 
     if @answer.save
-      render json: @answer, status: 201
+      render json: @answer, status: :created
     else
       render json: { errors: @answer.errors }, status: :unprocessable_entity
     end
@@ -26,7 +26,7 @@ class Api::V1::AnswersController < Api::V1::BaseController
 
   def update
     if @answer.update(answer_params)
-      render json: @answer, status: 201
+      render json: @answer, status: :created
     else
       render json: { errors: @answer.errors }, status: :unprocessable_entity
     end
@@ -34,7 +34,7 @@ class Api::V1::AnswersController < Api::V1::BaseController
 
   def destroy
     if @answer.destroy
-      render json: {}, status: 200
+      render json: @answer, status: :ok
     else
       render json: { errors: @answer.errors }, status: :unprocessable_entity
     end

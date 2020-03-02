@@ -63,6 +63,10 @@ describe 'Profiles API', type: :request do
 
       it 'returns all users without me' do
         expect(users_response.size).to eq 2
+
+        users_response.each do |user|
+          expect(user).to_not eq me.as_json
+        end        
       end
     end
   end

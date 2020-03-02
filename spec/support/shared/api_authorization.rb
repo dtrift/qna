@@ -4,12 +4,14 @@ shared_examples_for 'API Authorizable' do
       do_request(method, api_path, headers: headers)
 
       expect(response.status).to eq 401
+      expect(response.body).to be_empty
     end
 
     it 'if invalid access_token' do
       do_request(method, api_path, params: { access_token: '123123' }, headers: headers)
 
       expect(response.status).to eq 401
+      expect(response.body).to be_empty
     end
   end
 end

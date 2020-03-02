@@ -43,11 +43,11 @@ class Api::V1::AnswersController < Api::V1::BaseController
   private
 
   def find_question
-    @question = Question.with_attached_files.find(params[:question_id])
+    @question ||= Question.with_attached_files.find(params[:question_id])
   end
 
   def find_answer
-    @answer = Answer.with_attached_files.find(params[:id])
+    @answer ||= Answer.with_attached_files.find(params[:id])
   end
 
   def answer_params

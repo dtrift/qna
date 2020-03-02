@@ -66,7 +66,7 @@ describe 'Profiles API', type: :request do
 
         users_response.each do |user|
           expect(user).to_not eq me.as_json
-        end        
+        end
       end
     end
   end

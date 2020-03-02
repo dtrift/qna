@@ -81,7 +81,7 @@ describe 'Answers API', type: :request do
       end
 
       it 'returns files' do
-        expect(answer_response['files'].first.size).to eq 1 
+        expect(answer_response['files'].first.size).to eq 1
       end
     end
   end
@@ -141,7 +141,7 @@ describe 'Answers API', type: :request do
         patch api_path, params: {
           access_token: access_token.token,
           answer: new_params_for_answer,
-        }, headers: headers 
+        }, headers: headers
       }
 
       it_behaves_like 'Status OK' do
@@ -178,7 +178,7 @@ describe 'Answers API', type: :request do
         delete api_path, params: {
           access_token: access_token.token,
           answer_id: answer.id,
-        }, headers: headers 
+        }, headers: headers
       }
 
       it_behaves_like 'Status OK' do

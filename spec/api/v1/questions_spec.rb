@@ -71,7 +71,7 @@ describe 'Questions API', type: :request do
         post api_path, params: { 
           access_token: access_token.token,
           question: question
-        }, headers: headers 
+        }, headers: headers
       }
 
       it_behaves_like 'Status OK' do
@@ -109,10 +109,10 @@ describe 'Questions API', type: :request do
       let(:question_response) { json['question'] }
 
       let(:question_request) {
-        patch api_path, params: { 
+        patch api_path, params: {
           access_token: access_token.token,
           question: new_params_for_question
-        }, headers: headers 
+        }, headers: headers
       }
 
       it_behaves_like 'Status OK' do
@@ -151,10 +151,10 @@ describe 'Questions API', type: :request do
 
       let(:question_request) {
         delete api_path,
-        params: { 
+        params: {
           access_token: access_token.token,
           question_id: question.id
-        }, headers: headers 
+        }, headers: headers
       }
 
       it_behaves_like 'Status OK' do

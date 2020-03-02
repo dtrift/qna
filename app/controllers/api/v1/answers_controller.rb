@@ -5,7 +5,7 @@ class Api::V1::AnswersController < Api::V1::BaseController
   authorize_resource
 
   def index
-    @answers = @question.answers
+    @answers = @question.answers.with_attached_files
     render json: @answers
   end
 

@@ -4,7 +4,7 @@ class Api::V1::QuestionsController < Api::V1::BaseController
   authorize_resource
 
   def index
-    @questions = Question.all
+    @questions = Question.with_attached_files.all
     render json: @questions
   end
 

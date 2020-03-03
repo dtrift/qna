@@ -49,6 +49,7 @@ gem 'omniauth-twitter'
 gem 'omniauth-vkontakte'
 gem 'cleanup'
 
+# Authorization
 gem 'cancancan'
 
 # Authorization Code Flow
@@ -56,6 +57,10 @@ gem 'doorkeeper', '5.1.0'
 
 gem 'active_model_serializers', '~> 0.10'
 
+# Background processing framework
+gem 'sidekiq'
+gem 'sinatra', require: false
+gem 'whenever', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -1,2 +1,9 @@
-h1 DailyDigest#digest
-p = @greeting + ", find me in app/views/daily_digest_mailer/digest.html.slim"
+h1 New Questions for yesterday
+li
+  - @questions.each do |question|
+    p
+      h3
+        = link_to question.title, url_for(question)
+    p
+      = question.body.truncate(150)
+    hr

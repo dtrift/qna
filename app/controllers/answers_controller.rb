@@ -6,6 +6,7 @@ class AnswersController < ApplicationController
   before_action :find_answer, only: %i[update destroy best]
 
   after_action :publish_answer, only: %i[create]
+  after_action :send_new_answer, only: %i[create]
 
   authorize_resource
   
@@ -84,5 +85,9 @@ class AnswersController < ApplicationController
         files: answer_files,
         links: @answer.links
         )
+  end
+
+  def send_new_answer
+    NewAnswerDigestJob.perform_later(@answer)
   end
 end

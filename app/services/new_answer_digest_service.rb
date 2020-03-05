@@ -3,6 +3,5 @@ class NewAnswerDigestService
     answer.question.subscribers.find_each do |user|
       NewAnswerDigestMailer.send_for(user, answer).deliver_later
     end
-    # NewAnswerDigestMailer.send_for(answer).deliver_later
   end
 end

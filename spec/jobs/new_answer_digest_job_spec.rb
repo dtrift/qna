@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe NewAnswerDigestJob, type: :job do
-  let(:users) { create_list :user, 2 }
-  let(:question) { create :question, user: users.first }
-  let(:answer) { create :answer, question: question, user: users.last }
+  let(:answer) { create :answer }
   let(:service) { double('NewAnswerDigestService') }
 
   before { allow(NewAnswerDigestService).to receive(:new).and_return(service) }

@@ -35,10 +35,10 @@ class User < ApplicationRecord
   end
 
   def subscribe!(resource)
-    subscriptions.create!(question_id: resource.id) unless subscribed_of?(resource.id)
+    subscriptions.create!(question_id: resource.id)
   end
 
   def unsubscribe!(resource)
-    subscriptions.destroy!(question_id: resource.id) if subscribed_of?(resource.id)
+    subscriptions.destroy!(question_id: resource.id)
   end
 end

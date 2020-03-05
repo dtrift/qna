@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe SubscriptionsController, type: :controller do
-  let(:author) { create :user }
+  let(:author) { create :user }  
   let(:user) { create :user }
   let(:question) { create :question, user: author }
 
@@ -23,6 +23,12 @@ RSpec.describe SubscriptionsController, type: :controller do
 
       it 'creates new subscription' do
         expect { request_subscription }.to change(user.subscriptions, :count).by(1)
+      end
+
+      it 'render template create' do
+        request_subscription
+
+        expect(response).to render_template :create
       end
     end
 
@@ -53,6 +59,12 @@ RSpec.describe SubscriptionsController, type: :controller do
 
       it 'deletes subscription' do
         expect { request_subscription }.to change(user.subscriptions, :count).by(-1)
+      end
+
+      it 'render template destroy' do
+        request_subscription
+
+        expect(response).to render_template :destroy
       end
     end
 

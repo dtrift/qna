@@ -17,7 +17,6 @@ class QuestionsController < ApplicationController
     @answer = Answer.new
     @comment = Comment.new
     @answer.links.build
-    # @subscription = current_user.subscriptions.find_by(question_id: @question.id) if current_user
   end
 
   def new
@@ -32,8 +31,6 @@ class QuestionsController < ApplicationController
 
     if @question.save
       redirect_to @question, notice: 'Question successfully created'
-
-      # current_user.subscribe!(@question)
     else
       render :new
     end
@@ -84,6 +81,6 @@ class QuestionsController < ApplicationController
 
   def find_subscription
     @subscription = current_user.subscriptions
-      .find_by(question_id: @question.id) if current_user
+      .find_by(question_id: @question) if current_user
   end
 end

@@ -17,7 +17,7 @@ class Question < ApplicationRecord
 
   validates :title, :body, presence: true
 
-  after_save :subscribe_user!
+  after_create_commit :subscribe_user!
 
   private
 

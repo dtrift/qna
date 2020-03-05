@@ -6,7 +6,7 @@ RSpec.describe NewAnswerDigestMailer, type: :mailer do
     let(:user) { users.first }
     let(:question) { create :question, user: user }
     let(:answer) { create :answer, question: question, user: users.last }
-    let(:mail) { NewAnswerDigestMailer.send_for(answer) }
+    let(:mail) { NewAnswerDigestMailer.send_for(user, answer) }
 
     it 'renders the headers' do
       expect(mail.subject).to eq("New Answer for question #{answer.question.title}")

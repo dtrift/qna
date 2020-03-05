@@ -11,7 +11,7 @@ class Answer < ApplicationRecord
   validates :body, presence: true
   validates :best, inclusion: [true, false]
 
-  after_save :send_notification
+  after_save :notify_author_of_question
 
   def set_best!
     transaction do
@@ -24,7 +24,7 @@ class Answer < ApplicationRecord
 
   private
 
-  def send_notification
+  def notify_author_of_question
     NewAnswerDigestJob.perform_later(self)
   end
 end

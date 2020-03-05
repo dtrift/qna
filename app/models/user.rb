@@ -12,6 +12,7 @@ class User < ApplicationRecord
   has_many :badges, dependent: :destroy
   has_many :votes, dependent: :destroy
   has_many :comments, dependent: :destroy
+  has_many :subscriptions, dependent: :destroy
 
   def author?(resource)
     id == resource.user_id
@@ -27,5 +28,17 @@ class User < ApplicationRecord
 
   def create_authorization!(auth)
     self.authorizations.create!(provider: auth.provider, uid: auth.uid)
+  end
+
+  def subscribed_of?(resource)
+    subscriptions.exists?(question_id: resource)
+  end
+
+  def subscribe!(resource)
+    subscriptions.create!(question_id: resource.id) unless subscribed_of?(resource.id)
+  end
+
+  def unsubscribe!(resource)
+    subscriptions.destroy!(question_id: resource.id) if subscribed_of?(resource.id)
   end
 end

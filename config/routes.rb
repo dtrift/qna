@@ -10,6 +10,10 @@ Rails.application.routes.draw do
 
   root to: "questions#index"
 
+  resource :user do
+    resources :subscriptions, only: %i[create destroy]
+  end
+
   resources :attachments, only: %i[destroy]
   resources :links, only: %i[destroy]
 

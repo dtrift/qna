@@ -3,6 +3,7 @@ class QuestionsController < ApplicationController
 
   before_action :authenticate_user!, except: %i[index show]
   before_action :find_question, only: %i[show update destroy]
+  before_action :find_subscription, only: %i[show update]
 
   after_action :publish_question, only: %i[create]
 
@@ -16,6 +17,7 @@ class QuestionsController < ApplicationController
     @answer = Answer.new
     @comment = Comment.new
     @answer.links.build
+    # @subscription = current_user.subscriptions.find_by(question_id: @question.id) if current_user
   end
 
   def new
@@ -30,6 +32,8 @@ class QuestionsController < ApplicationController
 
     if @question.save
       redirect_to @question, notice: 'Question successfully created'
+
+      # current_user.subscribe!(@question)
     else
       render :new
     end
@@ -76,5 +80,10 @@ class QuestionsController < ApplicationController
         locals: { question: @question }
         )
       )
+  end
+
+  def find_subscription
+    @subscription = current_user.subscriptions
+      .find_by(question_id: @question.id) if current_user
   end
 end

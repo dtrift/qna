@@ -3,6 +3,7 @@ class QuestionsController < ApplicationController
 
   before_action :authenticate_user!, except: %i[index show]
   before_action :find_question, only: %i[show update destroy]
+  before_action :find_subscription, only: %i[show update]
 
   after_action :publish_question, only: %i[create]
 
@@ -76,5 +77,10 @@ class QuestionsController < ApplicationController
         locals: { question: @question }
         )
       )
+  end
+
+  def find_subscription
+    @subscription = current_user.subscriptions
+      .find_by(question_id: @question) if current_user
   end
 end

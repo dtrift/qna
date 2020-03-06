@@ -15,5 +15,5 @@ RSpec.describe NewAnswerDigestMailer, type: :mailer do
     it 'renders the body' do
       expect(mail.body.encoded).to match(answer.body)
     end
-  end  
+  end
 end

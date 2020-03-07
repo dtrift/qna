@@ -28,12 +28,11 @@ gem 'jbuilder', '~> 2.7'
 gem 'slim-rails'
 # js template engine
 # gem 'skim'
+
 # Rails variables in js
 gem 'gon'
-
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
-
 # Github API
 gem 'octokit', '~> 4.0'
 # Cocoon for nested forms
@@ -48,20 +47,16 @@ gem 'omniauth-github'
 gem 'omniauth-twitter'
 gem 'omniauth-vkontakte'
 gem 'cleanup'
-
 # Authorization
 gem 'cancancan'
-
 # Authorization Code Flow
 gem 'doorkeeper', '5.1.0'
 
 gem 'active_model_serializers', '~> 0.10'
-
 # Background processing framework
 gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'whenever', require: false
-
 # Search engine
 gem 'mysql2',          '~> 0.5.3', platform: :ruby
 gem 'thinking-sphinx', '~> 4.0'
@@ -70,7 +65,6 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'factory_bot_rails'
-  
   # RSpec with Rails 6
   gem 'rspec-core', git: 'https://github.com/rspec/rspec-core'
   gem 'rspec-expectations', git: 'https://github.com/rspec/rspec-expectations'
@@ -99,6 +93,9 @@ group :test do
   gem 'rails-controller-testing'
   gem 'launchy'
   gem 'capybara-email'
+  # Database cleaner
+  gem 'database_cleaner-active_record'
+  gem 'database_cleaner-redis'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

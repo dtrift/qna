@@ -63,8 +63,8 @@ gem 'sinatra', require: false
 gem 'whenever', require: false
 
 # Search engine
-gem 'thinking-sphinx'
-gem 'mysql2'
+gem 'mysql2',          '~> 0.5.3', platform: :ruby
+gem 'thinking-sphinx', '~> 4.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

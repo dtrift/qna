@@ -6,7 +6,7 @@ RSpec.describe SearchController, type: :controller do
   describe 'GET #index' do
     before do
       allow(ThinkingSphinx).to receive(:search).and_return(question)
-      get :index, params: { query: 'For' }
+      get :index, params: { query: 'For', resource: 'All' }
     end
 
     context 'with valid attributes' do

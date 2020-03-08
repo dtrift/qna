@@ -1,11 +1,18 @@
 class SearchController < ApplicationController
   def index
-    @results = ThinkingSphinx.search(params[:query])
+    @results = finds
   end
 
   private
 
-  def search_params
-    params.permit(:query, :commit)
+  def finds
+    query = params[:query]
+    resource = params[:resource]
+
+    if resource == 'All'
+      ThinkingSphinx.search(query)
+    else
+      resource.constantize.search(query)
+    end
   end
 end

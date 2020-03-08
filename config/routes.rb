@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   root to: "questions#index"
 
-  get :search, to: 'search#index'
+  get :search, to: "search#index"
 
   resource :user do
     resources :subscriptions, only: %i[create destroy]

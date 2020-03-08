@@ -1,10 +1,16 @@
 = form_tag search_path, method: :get, class: 'form-inline' do
+  .form-group
+    = label_tag :query, 'Search'
 
-  = label_tag :query, 'Search'
+    = text_field_tag :query, params[:query]
 
-  = text_field_tag :query,
-                   params[:query],
-                   required: true,
-                   class: 'form-control'
+    = check_box_tag(:question)
+    = label_tag(:question, "Question")
 
-  = submit_tag 'Find'
+    = check_box_tag(:answer)
+    = label_tag(:answer, "Answer")
+
+    = check_box_tag(:comment)
+    = label_tag(:comment, "Comment")
+
+    = submit_tag 'Find'

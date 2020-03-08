@@ -1,0 +1,4 @@
+p = "Results: #{@results.count}"
+p
+  - @results.each do |result|
+    = render result.class.to_s.downcase, result: result

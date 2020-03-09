@@ -4,12 +4,13 @@ RSpec.describe SearchController, type: :controller do
   let(:question) { create :question, title: 'Title for the Question', body: 'Some Body'  }
 
   describe 'GET #index' do
-    before do
-      allow(ThinkingSphinx).to receive(:search).and_return(question)
-      get :index, params: { query: 'For', resource: 'All' }
-    end
-
     context 'with valid attributes' do
+      before do
+        allow(SearchService).to receive(:find).and_return(question)
+
+        get :index, params: { query: 'For', resource: 'All' }
+      end
+
       it 'Status OK' do
         expect(response).to be_successful
       end
@@ -20,6 +21,22 @@ RSpec.describe SearchController, type: :controller do
 
       it 'question assign to results' do
         expect(assigns(:results)).to eq question
+      end
+    end
+
+    context 'with invalid query' do
+      before do
+        allow(SearchService).to receive(:find).and_return(question)
+
+        get :index, params: { query: '', resource: 'All' }
+      end
+
+      it 'Status 3xx' do
+        expect(response.status).to eq 302
+      end 
+
+      it 'redirect to root path' do
+        expect(response).to redirect_to root_path
       end
     end
   end

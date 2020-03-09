@@ -1,18 +1,14 @@
 class SearchController < ApplicationController
   def index
-    @results = finds
-  end
-
-  private
-
-  def finds
     query = params[:query]
     resource = params[:resource]
 
-    if resource == 'All'
-      ThinkingSphinx.search(query)
+    if query.blank?
+      redirect_to root_path
+
+      flash[:notice] = 'Query can\'t be blank'
     else
-      resource.constantize.search(query)
+      @results = SearchService.find(query, resource)
     end
   end
 end

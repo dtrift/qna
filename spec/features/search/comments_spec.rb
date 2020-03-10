@@ -6,8 +6,9 @@ feature 'User can search for comment', %q{
   In order to find needed comment  
 } do
 
-  given(:question) { create :question }
-  given(:comments) { create_list :comment, 2, commentable: question }
+  given(:commentable_question) { create :question }
+  given(:question) { create :question, title: 'Test Content for the Quetion' }
+  given(:comments) { create_list :comment, 2, commentable: commentable_question }
 
   given!(:comment) {
     create :comment,
@@ -15,16 +16,32 @@ feature 'User can search for comment', %q{
     content: 'Test Content for the comment1'
   }
 
-  background { visit root_path }
-
-  scenario 'Searches for the comments', sphinx: true, js: true do
+  given(:search_query) { 
     ThinkingSphinx::Test.run do
       fill_in 'Search', with: 'test content'
+      select 'Comment', from: :resource
       click_on 'Find'
+    end 
+  }
 
+
+  describe 'Searches for the comments', sphinx: true, js: true do
+    background do
+      visit root_path
+      search_query
+    end
+
+    scenario 'the comment is in the results' do
       expect(page).to have_content comment.content
+    end
+
+    scenario 'other comments are not present in the results' do
       expect(page).to_not have_content comments.first.content
       expect(page).to_not have_content comments.last.content
+    end
+
+    scenario 'other entities are not present in the results' do
+      expect(page).to_not have_content question.title
     end
   end
 end

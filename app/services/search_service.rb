@@ -1,9 +1,11 @@
 class SearchService
-  def self.find(query, resource)
-    if resource == 'All'
-      ThinkingSphinx.search(query)
+  RESOURCES = %w[All Question Answer Comment User].freeze
+
+  def self.call(params)
+    if params[:resource] == 'All'
+      ThinkingSphinx.search(params[:query])
     else
-      resource.constantize.search(query)
+      params[:resource].constantize.search(params[:query])
     end 
   end
 end

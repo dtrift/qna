@@ -1,14 +1,17 @@
 class SearchController < ApplicationController
   def index
-    query = params[:query]
-    resource = params[:resource]
-
-    if query.blank?
+    unless SearchService::RESOURCES.include?(params[:resource])
       redirect_to root_path
 
-      flash[:notice] = 'Query can\'t be blank'
+      flash[:alert] = 'Wrong resource! Select available resource.'
     else
-      @results = SearchService.find(query, resource)
+       @results = SearchService.call(query_params)
     end
+  end
+
+  private
+
+  def query_params
+    params.permit(:query, :resource)
   end
 end

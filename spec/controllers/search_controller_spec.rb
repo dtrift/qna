@@ -23,5 +23,21 @@ RSpec.describe SearchController, type: :controller do
         expect(assigns(:results)).to eq question
       end
     end
+
+    context 'with invalid params[:resource]' do
+      before do
+        allow(SearchService).to receive(:call).and_return(question)
+
+        get :index, params: { query: 'test', resource: 'Train' }
+      end
+
+      it 'Status 3xx' do
+        expect(response.status).to eq 302
+      end 
+
+      it 'redirect to root path' do
+        expect(response).to redirect_to root_path
+      end
+    end
   end
 end

@@ -4,12 +4,10 @@ RSpec.describe SearchController, type: :controller do
   let(:question) { create :question, title: 'Title for the Question', body: 'Some Body'  }
 
   describe 'GET #index' do
-    context 'with valid attributes' do
-      before do
-        allow(SearchService).to receive(:call).and_return(question)
+    before { allow(SearchService).to receive(:call).and_return(question) }
 
-        get :index, params: { query: 'For', resource: 'All' }
-      end
+    context 'with valid attributes' do
+      before { get :index, params: { query: 'For', resource: 'All' } }
 
       it 'Status OK' do
         expect(response).to be_successful
@@ -25,11 +23,7 @@ RSpec.describe SearchController, type: :controller do
     end
 
     context 'with invalid params[:resource]' do
-      before do
-        allow(SearchService).to receive(:call).and_return(question)
-
-        get :index, params: { query: 'test', resource: 'Train' }
-      end
+      before { get :index, params: { query: 'test', resource: 'WrongResource' } }
 
       it 'Status 3xx' do
         expect(response.status).to eq 302

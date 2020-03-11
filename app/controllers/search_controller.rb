@@ -1,12 +1,10 @@
 class SearchController < ApplicationController
   def index
-    unless SearchService::RESOURCES.include?(params[:resource])
-      redirect_to root_path
+    @results = SearchService.call(params[:query], params[:resource])
 
-      flash[:alert] = 'Wrong resource! Select available resource.'
-    else
-       @results = SearchService.call(query_params)
-    end
+  rescue StandardError => e
+    redirect_to root_path
+    flash[:alert] = e.message
   end
 
   private

@@ -5,7 +5,7 @@ RSpec.describe SearchService do
     it 'all resources' do
       expect(ThinkingSphinx).to receive(:search).with('test query')
 
-      SearchService.call(query: 'test query', resource: 'All')
+      SearchService.call('test query', 'All')
     end
 
 
@@ -13,7 +13,7 @@ RSpec.describe SearchService do
       it "#{resource} model" do
         expect(resource.constantize).to receive(:search).with('test query')
 
-        SearchService.call(query: 'test query', resource: resource)
+        SearchService.call('test query', resource)
       end
     end
   end

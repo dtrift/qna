@@ -7,41 +7,28 @@ feature 'User can search for comment', %q{
 } do
 
   given(:commentable_question) { create :question }
-  given(:question) { create :question, title: 'Test Content for the Quetion' }
+  given(:question) { create :question, body: 'Test Content for the Quetion' }
   given(:comments) { create_list :comment, 2, commentable: commentable_question }
-
-  given!(:comment) {
-    create :comment,
-    commentable: question,
-    content: 'Test Content for the comment1'
-  }
-
-  given(:search_query) { 
-    ThinkingSphinx::Test.run do
-      fill_in 'Search', with: 'test content'
-      select 'Comment', from: :resource
-      click_on 'Find'
-    end 
-  }
-
+  given!(:comment) { create :comment, commentable: question, content: 'Test Content for the comment' }
+  given!(:answer) { create :answer, body: 'Test content for the answer' }
 
   describe 'Searches for the comments', sphinx: true, js: true do
-    background do
-      visit root_path
-      search_query
-    end
+    background { visit root_path }
 
-    scenario 'the comment is in the results' do
-      expect(page).to have_content comment.content
-    end
+    scenario 'with ThinkingSphinx' do
+      ThinkingSphinx::Test.run do
+        fill_in 'Search', with: 'test content'
+        select 'Comment', from: :resource
+        click_on 'Find'
 
-    scenario 'other comments are not present in the results' do
-      expect(page).to_not have_content comments.first.content
-      expect(page).to_not have_content comments.last.content
-    end
+        expect(page).to have_content comment.content
 
-    scenario 'other entities are not present in the results' do
-      expect(page).to_not have_content question.title
+        comments.each do |comment|
+          expect(page).to_not have_content comment.content
+        end
+        expect(page).to_not have_content question.body
+        expect(page).to_not have_content answer.body
+      end
     end
   end
 end

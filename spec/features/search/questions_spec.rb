@@ -6,35 +6,28 @@ feature 'User can search for question', %q{
   In order to find needed question  
 } do
 
-  given(:answer) { create :answer, body: 'Some body for the Answer' }
+  given!(:answer) { create :answer, body: 'Some body for the Answer' }
   given(:questions) { create_list :question, 2 }
   given!(:question) { create :question, title: 'SOME BODY Title', body: 'Body for the question' }
-
-  given(:search_query) { 
-    ThinkingSphinx::Test.run do
-      fill_in 'Search', with: 'some body'
-      select 'Question', from: :resource
-      click_on 'Find'
-    end 
-  }
+  given(:comment) { create :comment, commentable: answer, content: 'Some Body content for the Comment' }
 
   describe 'Searches for the question', sphinx: true, js: true do
-    background do
-      visit root_path
-      search_query
-    end
+    background { visit root_path }
 
-    scenario 'the question is in the results' do
-      expect(page).to have_content question.body 
-    end
+    scenario 'with ThinkingSphinx' do
+      ThinkingSphinx::Test.run do
+        fill_in 'Search', with: 'some body'
+        select 'Question', from: :resource
+        click_on 'Find'
 
-    scenario 'other question are not present in the results' do
-      expect(page).to_not have_content questions.first.body
-      expect(page).to_not have_content questions.last.body
-    end
+        expect(page).to have_content question.body 
 
-    scenario 'other entities are not present in the results' do
-      expect(page).to_not have_content answer.body
+        questions.each do |question|
+          expect(page).to_not have_content question.body
+        end
+        expect(page).to_not have_content answer.body
+        expect(page).to_not have_content comment.content
+      end 
     end
   end
 end

@@ -4,7 +4,7 @@
 # You can define all roles on a single server, or split them:
 
 server "qna.rfix.cc", user: "deployer", roles: %w{app db web}, primary: true
-set :rail_env, :production
+set :rails_env, :production
 
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}

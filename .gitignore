@@ -39,3 +39,5 @@ yarn-debug.log*
 /config/credentials/test.key
 /config/*.sphinx.conf
 /db/sphinx
+
+/config/credentials/production.key

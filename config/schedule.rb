@@ -21,4 +21,8 @@ every 1.day, at: '12pm' do
   runner "DailyDigestService.send_digest"
 end
 
+every 30.minutes do
+  rake "ts:index"
+end
+
 # Learn more: http://github.com/javan/whenever

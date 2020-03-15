@@ -7,5 +7,4 @@
         = render @questions
 
     - if user_signed_in? && can?(:create, Question)
-      .container
-        = link_to 'Ask', new_question_path, class: "btn btn-success"
+      = link_to 'Ask', new_question_path, class: "btn btn-success"

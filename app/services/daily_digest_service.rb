@@ -1,5 +1,5 @@
 class DailyDigestService
-  def send_digest
+  def self.send_digest
     return unless Question.where(created_at: Date.yesterday.all_day).exists?
 
     User.find_each do |user|

@@ -1,65 +1,72 @@
 - if current_user&.badges.present?
-  .received-badges  
-    h2 Received badges
-    - current_user&.badges.each do |badge|
-      h3 Badge: #{badge.name}
-      p Question: #{badge.question.title} 
-      p
-        = image_tag badge.image, size: '100x100'
+  span.border.border-light.card
+    .card-header
+      .received-badges
+        h2 Received badges
+        
+    .card-body
+      - current_user&.badges.each do |badge|
+        h3 Badge: #{badge.name}
+        p Question: #{badge.question.title} 
+        p
+          = image_tag badge.image, size: '100x100'
 
-h1 = @question.title
-p = @question.body
-p Author: #{@question.user.email}
+span.border.border-light.card
+  .card
+    .card-header
+      h1 = @question.title
+    .card-body
+      p = @question.body
+      p Author: #{@question.user.email}
 
-- if user_signed_in?
-  = render partial: 'subscriptions/subscription', locals: { resource: @question }
+      - if user_signed_in?
+        = render partial: 'subscriptions/subscription', locals: { resource: @question }
 
-.question-comments
-  = render partial: 'comments/list', locals: { resource: @question }
+      .question-comments
+        = render partial: 'comments/list', locals: { resource: @question }
 
-.vote
-  = render partial: 'votes/vote', locals: { resource: @question }
+      .vote
+        = render partial: 'votes/vote', locals: { resource: @question }
 
-- if @question.badge.present? && current_user&.author?(@question)
-  .badge
-    h3 Badge:
-    p
-      = @question.badge.name
-    p
-      = image_tag @question.badge.image, size: '100x100'
+      - if @question.badge.present? && current_user&.author?(@question)
+        .badge
+          h3 Badge:
+          p
+            = @question.badge.name
+          p
+            = image_tag @question.badge.image, size: '100x100'
 
-.links
-  p
-    = render partial: 'links/list', locals: { resource: @question }
+      .links
+        p
+          = render partial: 'links/list', locals: { resource: @question }
 
-.files
-  p
-    = render partial: 'attachments/attachment', locals: { resource: @question }
+      .files
+        p
+          = render partial: 'attachments/attachment', locals: { resource: @question }
 
-- if can?(:destroy, @question)
-  .edit-question
-    = link_to 'Edit', '#', class: 'edit-question-link',
-                      data: { question_id: @question.id }
-    '  |
-    = link_to 'Delete', question_path(@question),
-                        method: :delete,
-                        data: { confirm: 'Are you sure?' }
+      - if can?(:destroy, @question)
+        .edit-question
+          = link_to 'Edit', '#', class: 'edit-question-link',
+                            data: { question_id: @question.id }
+          '  |
+          = link_to 'Delete', question_path(@question),
+                              method: :delete,
+                              data: { confirm: 'Are you sure?' }
 
-    = form_with model: @question, class: 'hidden', html: { id: "edit-question-#{@question.id}" } do |f|
-      p
-        = f.label :title
-        = f.text_field :title, id: :question_title
+          = form_with model: @question, class: 'hidden', html: { id: "edit-question-#{@question.id}" } do |f|
+            p
+              = f.label :title
+              = f.text_field :title, id: :question_title
 
-      p
-        = f.label :body
-        = f.text_area :body, id: :question_body
+            p
+              = f.label :body
+              = f.text_area :body, id: :question_body
 
-      p
-        = f.label :files
-        = f.file_field :files, multiple: true, direct_upload: true
+            p
+              = f.label :files
+              = f.file_field :files, multiple: true, direct_upload: true
 
-      = render partial: 'links/add', locals: { f: f }
+            = render partial: 'links/add', locals: { f: f }
 
-      p
-        = f.submit 'Save'
-hr
+            p
+              = f.submit 'Save'

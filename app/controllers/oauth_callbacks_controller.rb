@@ -7,10 +7,6 @@ class OauthCallbacksController < Devise::OmniauthCallbacksController
     oauth_authentication
   end
 
-  def twitter
-    oauth_authentication
-  end
-
   private
 
   def auth

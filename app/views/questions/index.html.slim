@@ -1,10 +1,11 @@
-.questions  
-  span.border.border-light.card
-    table.table.table-striped
-      tr
-        th = 'Questions'
+- cache collection_cache_key :question do
+  .questions
+    span.border.border-light.card
+      table.table.table-striped
+        tr
+          th = 'Questions'
 
-        = render @questions
+          = render @questions
 
-    - if user_signed_in? && can?(:create, Question)
-      = link_to 'Ask', new_question_path, class: "btn btn-success"
+      - if user_signed_in? && can?(:create, Question)
+        = link_to 'Ask', new_question_path, class: "btn btn-success"

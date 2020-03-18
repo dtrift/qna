@@ -1,15 +1,16 @@
-- if current_user&.badges.present?
-  span.border.border-light.card
-    .card-header
-      .received-badges
-        h2 Received badges
-        
-    .card-body
-      - current_user&.badges.each do |badge|
-        h3 Badge: #{badge.name}
-        p Question: #{badge.question.title} 
-        p
-          = image_tag badge.image, size: '100x100'
+- cache [@question, current_user]
+  - if current_user&.badges.present?
+    span.border.border-light.card
+      .card-header
+        .received-badges
+          h2 Received badges
+          
+      .card-body
+        - current_user&.badges.each do |badge|
+          h3 Badge: #{badge.name}
+          p Question: #{badge.question.title} 
+          p
+            = image_tag badge.image, size: '100x100'
 
 span.border.border-light.card
   .card-header
@@ -17,6 +18,15 @@ span.border.border-light.card
   .card-body
     p = @question.body
     p Author: #{@question.user.email}
+
+    - if user_signed_in?
+      = render partial: 'subscriptions/subscription', locals: { resource: @question }
+
+    .question-comments
+      = render partial: 'comments/list', locals: { resource: @question }
+
+    .vote
+      = render partial: 'votes/vote', locals: { resource: @question }
 
     - if @question.badge.present? && current_user&.author?(@question)
       .badge
@@ -26,8 +36,13 @@ span.border.border-light.card
         p
           = image_tag @question.badge.image, size: '100x100'
 
-    - if user_signed_in?
-      = render partial: 'subscriptions/subscription', locals: { resource: @question }
+    .links
+      p
+        = render partial: 'links/list', locals: { resource: @question }
+
+    .files
+      p
+        = render partial: 'attachments/attachment', locals: { resource: @question }
 
     - if can?(:destroy, @question)
       .edit-question
@@ -55,21 +70,3 @@ span.border.border-light.card
 
           p
             = f.submit 'Save'
-
-    - cache @question
-      .vote
-        = render partial: 'votes/vote', locals: { resource: @question }
-
-      .links
-        p
-          = render partial: 'links/list', locals: { resource: @question }
-
-      .files
-        p
-          = render partial: 'attachments/attachment', locals: { resource: @question }
-
-      .question-comments
-        = render partial: 'comments/list', locals: { resource: @question }
-        
-    - if user_signed_in?
-      = render partial: 'comments/form', locals: { resource: @question }

@@ -17,9 +17,6 @@
       .answer-comments
         = render partial: 'comments/list', locals: { resource: answer }
 
-      - if user_signed_in?
-        = render partial: 'comments/form', locals: { resource: answer }
-
       p
         - if can?(:best, answer) && !answer.best?
           = button_to 'Best answer', best_answer_path(answer),

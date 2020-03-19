@@ -44,7 +44,6 @@ gem 'devise'
 # OAuth 
 gem 'omniauth'
 gem 'omniauth-github'
-gem 'omniauth-twitter'
 gem 'omniauth-vkontakte'
 gem 'cleanup'
 # Authorization

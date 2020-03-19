@@ -2,5 +2,11 @@
   .comments
     h3 Comments:
     = render resource.comments
-    
-= render 'comments/form', resource: resource
+
+- if user_signed_in?
+  = link_to 'Add comment', '#',
+            class: 'new-comment-link',
+            data: { klass: resource.class.to_s.downcase,
+              id: resource.id }
+      
+  = render 'comments/form', resource: resource

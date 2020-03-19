@@ -68,7 +68,7 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = true
 
-  # config.action_mailer.perform_deliveries = true
+  config.action_mailer.perform_deliveries = true
 
   config.action_mailer.default_url_options = { host: 'http://qna.rfix.cc' }
   config.action_mailer.delivery_method = :smtp

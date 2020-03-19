@@ -1,8 +1,9 @@
-h1 Confirm Email
-= form_with url: user_confirmation_path, local: true do |f|
-  p
-    = f.label :email, 'Your Email:'
-  p
-    = f.text_field :email, placeholder: 'your@email.com'
-  p  
-    = f.submit 'Send email'
+.login.col-md-4.offset-md-4
+  h1 Confirm Email
+  = form_with url: user_confirmation_path, local: true do |f|
+    p
+      = f.label :email, 'Enter Email:'
+    p
+      = f.text_field :email, placeholder: 'your@email.com', class: "form-group"
+    p  
+      = f.submit 'Send email', class: "btn btn-outline-primary"

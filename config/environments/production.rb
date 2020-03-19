@@ -69,7 +69,7 @@ Rails.application.configure do
   config.action_mailer.perform_caching = true
 
   config.action_mailer.perform_deliveries = true
-  
+
   config.action_mailer.default_url_options = { host: 'http://qna.rfix.cc' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
@@ -77,8 +77,8 @@ Rails.application.configure do
     port:                 587,
     user_name:            Rails.application.credentials[:SMTP][:USERNAME],
     password:             Rails.application.credentials[:SMTP][:PASSWORD],
-    authentication:       'plain',
-    enable_starttls_auto: false
+    authentication:       :login,
+    enable_starttls_auto: true
   }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to

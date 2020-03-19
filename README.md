@@ -1,25 +1,20 @@
-# README
+# Q&A
+Aналог stackoverflow
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+http://qna.rfix.cc
 
-Things you may want to cover:
+Не авторизованные пользователи могут просматривать вопросы и ответы
 
-* Ruby version
+Авторизованные пользователи могут задавать вопросы и давать ответы на вопросы, оставлять комментарии
 
-* System dependencies
+При создании вопроса пользователь может прикрепить несколько файлов/ссылок
 
-* Configuration
+Голосование за понравившийся вопрос/ответ
 
-* Database creation
+Награда за лучший ответ
 
-* Database initialization
+Автор может выбрать один ответ как лучший
 
-* How to run the test suite
+Поиск по сайту с помощью Sphinx
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-# qna
+TDD/BDD, Devise, Doorkeeper, OAuth, Sidekiq, Redis, Sphinx, Caching, ActionCable, REST API, CanCan, ActiveJob, Cron, Capistrano, Unicorn

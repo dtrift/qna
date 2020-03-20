@@ -206,6 +206,7 @@ GEM
       multi_json
       request_store (>= 1.0)
     hashie (3.6.0)
+    high_voltage (3.1.2)
     i18n (1.8.2)
       concurrent-ruby (~> 1.0)
     innertube (1.1.0)
@@ -465,6 +466,7 @@ DEPENDENCIES
   ed25519 (>= 1.2, < 2.0)
   factory_bot_rails
   gon
+  high_voltage (~> 3.1)
   jbuilder (~> 2.7)
   launchy
   letter_opener

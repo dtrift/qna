@@ -1,0 +1,21 @@
+span.container.col-lg-12
+  .card.mb-2
+    .card-header
+      h4  Aналог stackoverflow
+
+    .card-body
+      h6  Не авторизованные пользователи могут просматривать вопросы и ответы
+      h6  Авторизованные пользователи могут задавать вопросы и давать ответы на вопросы, оставлять комментарии
+      h6  При создании вопроса пользователь может прикрепить несколько файлов/ссылок
+      h6  Голосование за понравившийся вопрос/ответ
+      h6  Награда за лучший ответ
+      h6  Автор может выбрать один ответ как лучший
+      h6  Поиск по сайту с помощью Sphinx
+      h5  Технологии:
+      h6  TDD/BDD, Devise, Doorkeeper, OAuth, Sidekiq, Redis, Sphinx, Caching,
+      h6  ActionCable, REST API, CanCan, ActiveJob, Cron, Capistrano, Unicorn
+      hr
+
+      = link_to 'Back', root_path, class: 'btn btn-light btn-sm'
+      '
+      = link_to 'Ask a question', new_question_path, class: 'btn btn-success btn-sm'

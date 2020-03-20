@@ -19,8 +19,9 @@
 
       p
         - if can?(:best, answer) && !answer.best?
-          = button_to 'Best answer', best_answer_path(answer),
-                                     method: :patch, remote: true
+          = link_to 'Best answer', best_answer_path(answer),
+                                   method: :patch, remote: true,
+                                   class: "btn btn-success btn-sm"
 
       - if can?(:update, answer)
         '
@@ -33,16 +34,14 @@
                             data: { confirm: 'Are you sure?', answer_id: answer.id }
 
         = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
-          p
-            = f.label :body, 'Your Answer:'
-            = f.text_area :body, id: :answer_body
+          p= f.label :body, 'Your Answer:'
+          p= f.text_area :body, id: :answer_body
 
-          p
-            = f.label :files
-            = f.file_field :files, multiple: true, direct_upload: true
+          p= f.label :files
+          p= f.file_field :files, multiple: true, direct_upload: true
           - cache answer
             = render partial: 'links/add', locals: { f: f }
 
           br
-          = f.submit 'Save'
+          = f.submit 'Save', class: 'btn btn-success'
 hr

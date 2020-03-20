@@ -54,19 +54,18 @@ span.border.border-light.card
                             data: { confirm: 'Are you sure?' }
 
         = form_with model: @question, class: 'hidden', html: { id: "edit-question-#{@question.id}" } do |f|
-          p
-            = f.label :title
-            = f.text_field :title, id: :question_title
+          .form-group  
+            p= f.label :title
+            p= f.text_field :title, id: :question_title
+
+            p= f.label :body
+            p= f.text_area :body, id: :question_body
+
+            p
+              = f.label :files
+              = f.file_field :files, multiple: true, direct_upload: true
+
+            = render partial: 'links/add', locals: { f: f }
 
           p
-            = f.label :body
-            = f.text_area :body, id: :question_body
-
-          p
-            = f.label :files
-            = f.file_field :files, multiple: true, direct_upload: true
-
-          = render partial: 'links/add', locals: { f: f }
-
-          p
-            = f.submit 'Save'
+            = f.submit 'Save', class: 'btn btn-success'

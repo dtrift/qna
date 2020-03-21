@@ -21,21 +21,22 @@
         - if can?(:best, answer) && !answer.best?
           = link_to 'Best answer', best_answer_path(answer),
                                    method: :patch, remote: true,
-                                   class: "btn btn-success btn-sm"
+                                   class: 'btn btn-success btn-sm'
 
       - if can?(:update, answer)
         '
-        = link_to 'Edit', '#', class: 'edit-answer-link',
-                          data: { answer_id: answer.id }
-        '  |
+        = link_to 'Edit', '#', data: { answer_id: answer.id },
+                               class: 'edit-answer-link btn btn-primary btn-sm'
+        '
         = link_to 'Delete', answer_path(answer),
                             method: :delete,
                             remote: true,
+                            class: 'btn btn-danger btn-sm',
                             data: { confirm: 'Are you sure?', answer_id: answer.id }
 
         = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
           p= f.label :body, 'Your Answer:'
-          p= f.text_area :body, id: :answer_body
+          p= f.text_area :body, id: :answer_body, rows: 3, cols: 31
 
           p= f.label :files
           p= f.file_field :files, multiple: true, direct_upload: true

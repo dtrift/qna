@@ -7,7 +7,7 @@ consumer.subscriptions.create("AnswerChannel", {
   },
 
   received(data) {
-    var answers = $('.answers');
+    var answers = $('.answers .card-body');
 
     if (data['answer']['user_id'] !== gon.user_id) {
       var answer = renderAnswer(data['answer'], data['question_author']);
@@ -24,7 +24,7 @@ function renderAnswer(answer, question_author) {
 
   sections += `
     <p>${answer['body']}</p>
-    <h3 class="rating">Rating: 0</h3>
+    <p>Rating: 0</p>
   `;
 
   if (answer['user_id'] != gon.user_id) {
@@ -41,7 +41,7 @@ function renderAnswer(answer, question_author) {
 
   if (question_author.id == gon.user_id) {
     var bestButton = `
-      <button type="button" data-remote="true" rel="nofollow" data-method="patch" href="/answers/${answer['id']}/best">Best answer</button>
+      <button type="button" data-remote="true" rel="nofollow" data-method="patch" class="btn btn-success btn-sm" href="/answers/${answer['id']}/best">Best answer</button>
       <br>
     `;
 
@@ -50,9 +50,9 @@ function renderAnswer(answer, question_author) {
 
   if (answer['user_id'] == gon.user_id) {
     var  remoteAnswer = `
-      <a data-answer-id="${answer['id']}" class="edit-answer-link" href="#">Edit</a>
-      <a>|</a>
-      <a data-answer-id="${answer['id']}" data-remote="true" class="delete-answer-link" rel="nofollow" data-method="delete" href="/answers/${answer['id']}">Delete</a>
+      <a data-answer-id="${answer['id']}" class="edit-answer-link btn btn-primary btn-sm" href="#">Edit</a>
+      <a> </a>
+      <a data-answer-id="${answer['id']}" data-remote="true" class="delete-answer-link btn btn-danger btn-sm" rel="nofollow" data-method="delete" href="/answers/${answer['id']}">Delete</a>
     `;
 
     sections += remoteAnswer;

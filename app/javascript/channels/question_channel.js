@@ -6,6 +6,6 @@ consumer.subscriptions.create("QuestionChannel", {
   },
 
   received(data) {
-    $('.questions').append(data);
+    $('.questions .table-striped').append(data);
   }
 });

@@ -3,7 +3,7 @@ $(document).on('turbolinks:load', function(){
     var response = event.detail[0];
     var voteId = '.' + response.klass + '-' + response.id
 
-    $(voteId + ' .rating').html('<h3>' + 'Rating: ' + response.score + '</h3>');
+    $(voteId + ' .rating').html('Rating: ' + response.score);
     $(voteId + ' .voting').addClass('hidden');
     $(voteId + ' .revote-link').removeClass('hidden');
     $('.flash').html(response.flash)
@@ -13,7 +13,7 @@ $(document).on('turbolinks:load', function(){
     var response = event.detail[0];
     var voteId = '.' + response.klass + '-' + response.id
 
-    $(voteId + ' .rating').html('<h3>' + 'Rating: ' + response.score + '</h3>');
+    $(voteId + ' .rating').html('Rating: ' + response.score);
     $(voteId + ' .revote-link').addClass('hidden');
     $(voteId + ' .voting').removeClass('hidden');
     $('.flash').html('')

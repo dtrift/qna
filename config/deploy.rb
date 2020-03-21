@@ -12,6 +12,6 @@ set :deploy_user, 'deployer'
 append :linked_files, "config/database.yml", "config/master.key", "config/credentials/production.key"
 
 # Default value for linked_dirs is []
-append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", "storage""public/packs", ".bundle", "node_modules"
+append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", "storage", "public/packs", ".bundle", "node_modules"
 
 after 'deploy:publishing', 'unicorn:restart'

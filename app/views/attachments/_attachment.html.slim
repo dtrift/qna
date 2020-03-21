@@ -2,10 +2,13 @@
   - if resource.files.attached?
     ' Files:
     - resource.files.each do |file|
-        p class="attachment-#{file.id}"
-          = link_to file.filename.to_s, url_for(file)
-          '
-          - if can?(:manage, file) 
-            = link_to 'x', attachment_path(file),
-                           method: :delete,
-                           remote: true
+      p class="attachment-#{file.id}"
+      - if AttachmentsHelper::TYPES.include?(file.content_type)
+        = link_to (image_tag file, size: '200x150'), url_for(file), target: :blank
+      - else
+        = link_to file.filename.to_s, url_for(file), target: :blank
+      '
+      - if can?(:manage, file)
+        = link_to 'x', attachment_path(file),
+                       method: :delete,
+                       remote: true

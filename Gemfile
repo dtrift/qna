@@ -49,7 +49,7 @@ gem 'cleanup'
 # Authorization
 gem 'cancancan'
 # Authorization Code Flow
-gem 'doorkeeper', '5.1.0'
+gem 'doorkeeper', '5.1.1'
 
 gem 'active_model_serializers', '~> 0.10'
 # Background processing framework
